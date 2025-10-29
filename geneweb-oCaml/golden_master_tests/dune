@@ -1,0 +1,4 @@
+(executable
+ (name run_golden_master_tests)
+ (modules run_golden_master_tests)
+ (libraries yojson))

@@ -1,0 +1,50 @@
+/* Configuration page styles */
+section {
+  margin-bottom: 2rem;
+}
+
+section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+section div {
+  color: #4b5563;
+  line-height: 1.8;
+}
+
+.wizard-icon {
+  color: #10b981;
+  font-size: 0.875rem;
+}
+
+.bvar-item {
+  padding: 0.25rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+.config-file {
+  font-family: 'Courier New', monospace;
+  background-color: #f3f4f6;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Navigation buttons */
+.fixed {
+  position: fixed;
+}
+
+button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+button:active {
+  transform: scale(0.95);
+}

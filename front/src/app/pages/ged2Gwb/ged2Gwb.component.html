@@ -1,0 +1,203 @@
+<div class="bg-no-repeat bg-left-top flex items-center h-24" style="background-image: url('assets/gwlogo.png');">
+  <h1 class="w-full text-center text-4xl font-bold text-green-700 m-0 leading-[95px] ml-0">{{ translate.t('title') }}</h1>
+</div>
+
+<form method="get" action="ged2gwb" class="max-w-3xl mt-8 ml-0">
+  <input type="hidden" name="opt" value="check">
+  <ul class="list-disc ml-6">
+    <!-- Select GEDCOM file -->
+    <li class="mb-4">
+      {{ translate.t('selectSourceFile') }}
+      <div class="mt-2">
+        <!-- Directory/file browser placeholder -->
+        <div class="bg-white border border-blue-200 rounded p-4 text-xs">
+          <!-- You would insert your directory browser here -->
+          <span class="text-gray-500 italic">[Directory browser here]</span>
+        </div>
+        <div class="mt-2 text-xs text-gray-700 flex">
+          <span class="font-bold mr-1">{{ translate.t('note') }}:</span>
+          <span>{{ translate.t('noteText') }}</span>
+        </div>
+      </div>
+    </li>
+
+    <!-- Enter DB folder -->
+    <li class="mb-4">
+      {{ translate.t('enterDbFolder') }}
+      <div class="mt-2">
+        <div class="bg-white border border-blue-200 rounded p-4 text-xs flex items-center">
+          <span class="font-mono mr-2">&nbsp;&nbsp;-bd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <input name="bd" size="30" placeholder="." class="border border-gray-400 rounded px-2 py-1 w-full max-w-xs" />
+          <span class="ml-2 text-xs text-gray-700">{{ translate.t('defaultDot') }}</span>
+        </div>
+      </div>
+    </li>
+
+    <!-- Enter DB name -->
+    <li class="mb-4">
+      {{ translate.t('enterDbName') }}
+      <div class="mt-2">
+        <div class="bg-white border border-blue-200 rounded p-4 text-xs flex items-center">
+          <span class="font-mono mr-2">&nbsp;&nbsp;-o&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <input name="o" size="30" placeholder="name" class="border border-gray-400 rounded px-2 py-1 w-full max-w-xs" />
+          <span class="ml-2 text-xs text-gray-700">{{ translate.t('deducedFromSource') }}</span>
+        </div>
+      </div>
+    </li>
+
+    <!-- Select options -->
+    <li class="mb-4">
+      {{ translate.t('selectOptions') }}
+      <div class="space-y-2 mt-2">
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="f" id="f" value="on" class="mr-2" />
+          <label for="f" class="font-mono">-f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('destroyBase') }}</span>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="uin" id="uin" value="on" class="mr-2" />
+          <label for="uin" class="font-mono">-uin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('saveGedcomTags') }}</span>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="lf" id="lf" value="on" class="mr-2" />
+          <label for="lf" class="font-mono">-lf&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('convertName') }}</span>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="ls" id="ls" value="on" class="mr-2" />
+          <label for="ls" class="font-mono">-ls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('convertLastName') }}</span>
+        </div>
+        <div class="border border-blue-200 rounded px-2 py-1 w-fit flex flex-col">
+          <span class="mb-2">{{ translate.t('creationPeople') }}</span>
+          <div class="flex items-center">
+            <input type="checkbox" name="efn" id="efn" value="on" class="mr-2" />
+            <label for="efn" class="font-mono">-efn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| {{ translate.t('Activate') }}</label>
+          </div>
+        </div>
+        <div class="border border-blue-200 rounded px-2 py-1 w-fit flex flex-col">
+          <span class="mb-2">{{ translate.t('firstNameOption') }}</span>
+          <div class="flex items-center">
+            <span class="font-mono mr-2">&nbsp;&nbsp;-fne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="text" name="fne" size="2" maxlength="2" class="border border-gray-400 rounded px-2 py-1 w-12 mr-2" /> {{ translate.t('doesntInclude') }}
+          </div>
+        </div>
+        <div class="border border-blue-200 rounded px-2 py-1 w-fit flex flex-col">
+          <span class="mb-2">{{ translate.t('publicName') }}</span>
+          <div class="flex items-center">
+            <input type="checkbox" name="no_epn" id="no_epn" value="on" class="mr-2" />
+            <label for="no_epn" class="font-mono">-no_epn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| {{ translate.t('Disabled') }}</label>
+          </div>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="no_pit" id="no_pit" value="on" class="mr-2" />
+          <label for="no_pit" class="font-mono">-no_pit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('titleDetect') }}</span>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="tnd" id="tnd" value="on" class="mr-2" />
+          <label for="tnd" class="font-mono">-tnd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('negativeDate') }}</span>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="no_nd" id="no_nd" value="on" class="mr-2" />
+          <label for="no_nd" class="font-mono">-no_nd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('noNegativeDate') }}</span>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="nc" id="nc" value="on" class="mr-2" />
+          <label for="nc" class="font-mono">-nc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('dontControlData') }}</span>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="nopicture" id="nopicture" value="on" class="mr-2" />
+          <label for="nopicture" class="font-mono">-nopicture&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('indivPicture') }}</span>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="rs_no_mention" id="rs_no_mention" value="on" class="mr-2" />
+          <label for="rs_no_mention" class="font-mono">-rs_no_mention&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('markRelations') }}</span>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="org" id="org" value="on" class="mr-2" />
+          <label for="org" class="font-mono">-org&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </label>
+          <span class="ml-2">{{ translate.t('reorgMode') }}</span>
+        </div>
+        <div class="border border-blue-200 rounded px-2 py-1 w-fit flex flex-col">
+          <span class="mb-2">{{ translate.t('defaultSource') }}</span>
+          <div class="flex items-center">
+            <span class="font-mono mr-2">&nbsp;&nbsp;-ds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input name="ds" size="30" placeholder="source" class="border border-gray-400 rounded px-2 py-1 w-full max-w-xs" />
+          </div>
+        </div>
+        <div class="border border-blue-200 rounded px-2 py-1 w-fit flex flex-col">
+          <span class="mb-2">{{ translate.t('GEDCOMStandard') }}</span>
+          <div class="flex flex-row ml-4">
+            <div class="flex flex-col justify-center mr-4 font-mono text-base text-gray-700">
+              <span>-dates_dm</span>
+              <span>-dates_md</span>
+            </div>
+            <div class="flex flex-col">
+              <label class="flex items-center mb-1">
+                <input type="radio" name="date_format" value="y" checked class="mr-2" />
+                {{ translate.t('year') }}
+              </label>
+              <label class="flex items-center mb-1">
+                <input type="radio" name="date_format" value="dmy" class="mr-2" />
+                {{ translate.t('dayMonthYear') }}
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="date_format" value="mdy" class="mr-2" />
+                {{ translate.t('monthDayYear') }}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="border border-blue-200 rounded px-2 py-1 w-fit flex flex-col">
+          <span class="mb-2">{{ translate.t('letterEncod') }}</span>
+          <div class="flex flex-row ml-4">
+            <div class="flex flex-col justify-center mr-4 font-mono text-base text-gray-700">
+              <span>-charset</span>
+            </div>
+            <div class="flex flex-col">
+              <label class="flex items-center mb-1">
+                <input type="radio" name="lang" value="gedcom" checked class="mr-2" />
+                {{ translate.t('GEDCOM') }}
+              </label>
+              <label class="flex items-center mb-1">
+                <input type="radio" name="lang" value="ansel" class="mr-2" />
+                {{ translate.t('Ansel') }}
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="lang" value="ansi" class="mr-2" />
+                {{ translate.t('Ansi') }}
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="lang" value="ascii" class="mr-2" />
+                {{ translate.t('ASCII') }}
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="lang" value="msdos" class="mr-2" />
+                {{ translate.t('MSDOS') }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <!-- Add more options as needed, following the same pattern -->
+    <li class="mb-4">
+      {{ translate.t('thenClickButton') }}
+      <button type="submit" class="border border-gray-400 rounded px-4 py-1 bg-gray-100 text-center w-auto ml-2">Ok</button>
+    </li>
+  </ul>
+</form>
+
+<footer class="max-w-xl flex items-center justify-start border-t pt-4 text-sm text-gray-600 mt-8 ml-0">
+  <img src="assets/gwlogo.png" alt="GeneWeb"
+    class="h-8 w-28 p-0.5 bg-gray-100 border border-gray-400 rounded shadow cursor-pointer hover:bg-gray-200"
+    (click)="goToLink($event, 'https://github.com/geneweb/geneweb/')" />
+  <span class="ml-2 font-bold">{{ translate.t('footer') }}</span>
+</footer>

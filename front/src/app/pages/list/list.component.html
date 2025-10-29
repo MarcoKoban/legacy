@@ -1,0 +1,41 @@
+<div class="bg-no-repeat bg-left-top flex items-center h-24" style="background-image: url('assets/gwlogo.png');">
+  <h1 class="w-full text-center text-4xl font-bold text-green-700 m-0 leading-[95px] ml-0">{{ translate.t('title') }}</h1>
+</div>
+
+<div class="max-w-5xl flex items-center mb-8 ml-0">
+  <ul class="list-disc ml-6">
+      {{ translate.t('firstText') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">gwd_info</a>)<br />
+       <!-- ✅ ICI : affichage dynamique des bases -->
+    <div *ngIf="loading" class="text-gray-500 italic mt-2">
+      Chargement des bases de données...
+    </div>
+
+    <div *ngIf="errorMessage" class="text-red-600 mt-2">
+      {{ errorMessage }}
+    </div>
+
+    <ul *ngIf="!loading && databases.length > 0" class="mt-3 ml-6">
+      <li *ngFor="let db of databases" class="text-gray-800">
+        <a href="#" 
+          class="text-purple-700 underline hover:text-purple-900" 
+          (click)="goToDatabase($event, db.name)">
+          {{ db.name }}
+        </a>
+      </li>
+    </ul>
+
+    <div *ngIf="!loading && databases.length === 0" class="text-gray-500 italic mt-2">
+      Aucune base de données trouvée.
+    </div>
+
+    <br />
+      {{ translate.t('secondText') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event, '/home')">welcome</a>)
+  </ul>
+</div>
+
+<footer class="max-w-xl flex items-center justify-start border-t pt-4 text-sm text-gray-600 mt-8 ml-0">
+  <img src="assets/gwlogo.png" alt="GeneWeb"
+    class="h-8 w-28 p-0.5 bg-gray-100 border border-gray-400 rounded shadow cursor-pointer hover:bg-gray-200"
+    (click)="goToLink($event, 'https://github.com/geneweb/geneweb/')" />
+  <span class="ml-2 font-bold">{{ translate.t('footer') }}</span>
+</footer>

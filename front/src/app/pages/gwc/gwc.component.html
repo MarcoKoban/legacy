@@ -1,0 +1,93 @@
+<div class="bg-no-repeat bg-left-top flex items-center h-24" style="background-image: url('assets/gwlogo.png');">
+  <h1 class="w-full text-center text-4xl font-bold text-green-700 m-0 leading-[95px] ml-0">{{ translate.t('title') }}</h1>
+</div>
+
+<form method="get" action="gwc" class="max-w-3xl mt-8 ml-0">
+  <input type="hidden" name="opt" value="check">
+  <ul class="list-disc ml-6">
+    <li class="mb-4">
+      {{ translate.t('selectSourceFile') }}
+      <div class="mt-2">
+        <ul class="bg-white border border-blue-200 rounded p-4 text-xs">
+          <div class="flex items-start">
+            <span class="inline-block w-2 h-2 rounded-full border border-gray-400 mt-1 mr-2 flex-shrink-0"></span>
+            <div class="flex-1">
+              <div>{{ translate.t('selectSourceOrBrowse') }}</div>
+              <!-- Directory/file browser would go here in a real app thanks to the server -->
+              <div class="flex items-center mt-4">
+                <span class="inline-block w-2 h-2 rounded-full border border-gray-400 mr-2 flex-shrink-0"></span>
+                <span>{{ translate.t('orProvideDirectly') }}</span>
+              </div>
+              <input name="fname" size="50" placeholder="file" class="border border-gray-400 rounded px-2 py-1 w-full max-w-lg mt-2" />
+            </div>
+          </div>
+        </ul>
+      </div>
+      <div class="mt-2 text-xs text-gray-700">
+        <span class="font-bold">{{ translate.t('note') }}:</span>
+        {{ translate.t('noteText') }}
+      </div>
+    </li>
+    <li class="mb-4">
+      {{ translate.t('enterDbFolder') }}
+      <div class="mt-2 flex items-center">
+        <ul class="bg-white border border-blue-200 rounded p-4 text-xs">
+          <li>
+            <input name="bd" size="30" placeholder="." value="." class="border border-gray-400 rounded px-2 py-1 w-full max-w-xs" />
+            <span class="ml-2 text-xs text-gray-700">{{ translate.t('defaultDot') }}</span>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-4">
+      {{ translate.t('enterDbName') }}
+      
+      <div class="mt-2 flex items-center">
+        <ul class="bg-white border border-blue-200 rounded p-4 text-xs">
+          <input name="o" size="30" class="border border-gray-400 rounded px-2 py-1 w-full max-w-xs" />
+          <span class="ml-2 text-xs text-gray-700">{{ translate.t('deducedFromSource') }}</span>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-4">
+      {{ translate.t('selectOptions') }}
+      <div class="space-y-2 mt-2">
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="stats" value="on" class="mr-2" />
+          <label>{{ translate.t('displayStats') }}</label>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="nc" value="on" class="mr-2" />
+          <label>{{ translate.t('noCheckConsistency') }}</label>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="cg" value="on" class="mr-2" />
+          <label>{{ translate.t('endWithConsang') }}</label>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="f" value="on" class="mr-2" />
+          <label>{{ translate.t('deleteIfExists') }}</label>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="gwo" value="on" class="mr-2" />
+          <label>{{ translate.t('deleteGwo') }}</label>
+        </div>
+        <div class="flex items-center border border-blue-200 rounded px-2 py-1 w-fit">
+          <input type="checkbox" name="reorg" value="on" class="mr-2" />
+          <label>{{ translate.t('reorgMode') }}</label>
+        </div>
+      </div>
+    </li>
+    <li class="mb-4">
+      {{ translate.t('thenClickButton') }}
+      <button type="submit" class="border border-gray-400 rounded px-4 py-1 bg-gray-100 text-center w-auto ml-2">Ok</button>
+    </li>
+  </ul>
+</form>
+
+<footer class="max-w-xl flex items-center justify-start border-t pt-4 text-sm text-gray-600 mt-8 ml-0">
+  <img src="assets/gwlogo.png" alt="GeneWeb"
+    class="h-8 w-28 p-0.5 bg-gray-100 border border-gray-400 rounded shadow cursor-pointer hover:bg-gray-200"
+    (click)="goToLink($event, 'https://github.com/geneweb/geneweb/')" />
+  <span class="ml-2 font-bold">{{ translate.t('footer') }}</span>
+</footer>

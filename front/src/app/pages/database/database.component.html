@@ -1,0 +1,101 @@
+<div class="min-h-screen bg-white flex flex-col items-center py-8 px-4">
+  <!-- Logo et Titre -->
+  <div class="flex flex-col items-center mb-8">
+    <img src="assets/gwlogo.png" alt="GeneWeb Logo" class="w-32 h-32 mb-4" />
+    <h1 class="text-3xl font-semibold text-gray-800 text-center">{{ getDatabaseTitle() }}</h1>
+    <p class="text-gray-600 text-lg mt-2">{{ translate.getPersonCount(personCount) }}</p>
+  </div>
+
+  <!-- Section Outils -->
+  <div class="w-full max-w-4xl mb-6">
+    <div class="flex items-center justify-center mb-4">
+      <span class="text-gray-600 mr-2">✂️</span>
+      <h2 class="text-xl font-medium text-gray-700">{{ translate.t('tools') }}</h2>
+    </div>
+    
+    <div class="flex flex-wrap justify-center gap-3">
+      <button 
+        (click)="onAddChronicle()"
+        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center gap-2">
+        <span>📄</span>
+        {{ translate.t('add_chronicle') }}
+      </button>
+      
+      <button 
+        (click)="onAdvancedSearch()"
+        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors flex items-center gap-2">
+        <span>🔍</span>
+        {{ translate.t('advanced_search') }}
+      </button>
+      
+      <button 
+        (click)="onCalendars()"
+        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors flex items-center gap-2">
+        <span>📅</span>
+        {{ translate.t('calendars') }}
+      </button>
+      
+      <button 
+        (click)="onConfiguration()"
+        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center gap-2">
+        <span>⚙️</span>
+        {{ translate.t('configuration') }}
+      </button>
+    </div>
+    
+    <div class="flex flex-wrap justify-center gap-3 mt-3">
+      <button 
+        (click)="onAddNote()"
+        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center gap-2">
+        <span>📝</span>
+        {{ translate.t('add_note') }}
+      </button>
+      
+      <button 
+        (click)="onAddFamily()"
+        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center gap-2">
+        <span>👥</span>
+        {{ translate.t('add_family') }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="w-full max-w-4xl mt-auto pt-8 flex items-center justify-between text-sm text-gray-600">
+    <div class="flex items-center gap-2">
+      <a href="https://github.com/EpitechPGE45-2025/G-ING-900-PAR-9-1-legacy-22" target="_blank" class="text-blue-600 cursor-pointer hover:underline">🌐 {{ translate.t('geneweb_version') }}</a>
+      <span>©</span>
+      <a href="https://inria.fr" target="_blank" class="text-blue-600 hover:underline">INRIA</a>
+      <span>{{ translate.t('copyright') }}</span>
+      <a href="https://geneweb.tuxfamily.org/wiki/GeneWeb/fr" target="_blank" class="text-blue-600 hover:underline">W</a>
+      <a href="https://github.com/geneweb/geneweb" target="_blank" class="text-blue-600 hover:underline">
+        <svg class="inline-block w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </a>
+    </div>
+    
+    <div class="flex items-center gap-2 relative">
+      <button 
+        (click)="toggleLanguageDropdown()"
+        class="text-blue-600 hover:underline flex items-center gap-1 cursor-pointer">
+        {{ currentLanguage }}
+        <span>▼</span>
+      </button>
+      
+      <!-- Dropdown menu -->
+      <div 
+        *ngIf="showLanguageDropdown"
+        class="absolute bottom-full right-0 mb-2 bg-white border border-gray-300 rounded shadow-lg py-2 z-10 min-w-[150px]">
+        <button
+          *ngFor="let lang of languages"
+          (click)="changeLanguage(lang.code)"
+          [class.bg-blue-100]="lang.code.toUpperCase() === currentLanguage"
+          [class.font-bold]="lang.code.toUpperCase() === currentLanguage"
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-800 text-sm">
+          {{ lang.label }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

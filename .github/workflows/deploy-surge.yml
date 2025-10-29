@@ -1,0 +1,46 @@
+name: Deploy Frontend to Surge
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+  workflow_dispatch:
+
+
+jobs:
+  deploy-frontend:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: [self-hosted]
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: ''
+      
+      - name: Install dependencies
+        working-directory: ./front
+        run: npm ci
+      
+      - name: Build Angular App
+        working-directory: ./front
+        run: npm run build:prod
+      
+      - name: Prepare Surge deployment
+        working-directory: ./front
+        run: ./prepare-surge.sh
+      
+      - name: Deploy to Surge
+        working-directory: ./front
+        run: |
+          npx surge dist/front/browser geneweb.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}

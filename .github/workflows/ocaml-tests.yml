@@ -1,0 +1,65 @@
+name: 🐪 OCaml Reference Tests
+
+on:
+  push:
+    branches: [ main, dev, develop ]
+    paths:
+      - 'geneweb-master/**'
+      - 'geneweb-oCaml/**'
+      - '.github/workflows/ocaml-tests.yml'
+  pull_request:
+    branches: [ main, dev, develop ]
+    paths:
+      - 'geneweb-master/**'
+      - 'geneweb-oCaml/**'
+
+jobs:
+  ocaml-reference-tests:
+    name: 🧪 OCaml Reference Tests (50 tests baseline)
+    runs-on: ubuntu-latest  # OCaml setup requires standard Ubuntu environment
+
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🐪 Set up OCaml
+      uses: ocaml/setup-ocaml@v2
+      with:
+        ocaml-compiler: 4.14.x
+        opam-local-packages: |
+          geneweb-master/geneweb.opam
+
+    - name: 📦 Install dependencies
+      run: |
+        cd geneweb-master
+        opam install --deps-only .
+        opam install alcotest fmt
+
+    - name: 🏗️ Build OCaml project
+      run: |
+        cd geneweb-master
+        eval $(opam env)
+        make
+
+    - name: 🧪 Run OCaml tests (Reference 50 tests)
+      run: |
+        cd geneweb-master
+        eval $(opam env)
+        make test | tee test_output.log
+
+    - name: 📊 Extract test metrics
+      run: |
+        cd geneweb-master
+        echo "📊 OCaml Test Results:"
+        grep -E "Test Successful|tests run" test_output.log || echo "Test output parsing failed"
+        echo ""
+        echo "🎯 Python Migration Target:"
+        echo "- Total tests to implement: 50"
+        echo "- Test categories: Sosa(6), Place(5), Calendar(7), Wiki(16), Util(15), Merge(1)"
+
+    - name: 📦 Archive OCaml test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: ocaml-test-results-${{ github.sha }}
+        path: geneweb-master/test_output.log
+        retention-days: 30

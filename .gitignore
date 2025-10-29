@@ -1,0 +1,12 @@
+*.pdf
+
+chatmodes/
+.vscode/
+.prompt.md
+Issues/
+
+geneweb_python/src/geneweb_python.egg-info/
+
+notes/
+
+.venv/

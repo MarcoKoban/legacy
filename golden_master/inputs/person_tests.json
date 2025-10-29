@@ -1,0 +1,102 @@
+{
+  "test_suite": "Person Management",
+  "description": "Test inputs for person creation and management",
+  "tests": [
+    {
+      "id": "PERSON-001",
+      "description": "Person creation with basic data",
+      "operations": [
+        {
+          "op": "create_person",
+          "first_name": "Jean",
+          "surname": "Dupont",
+          "sex": "male",
+          "birth_date": {"day": 15, "month": 8, "year": 1950},
+          "birth_place": "Paris, France"
+        },
+        {
+          "op": "create_person",
+          "first_name": "Marie",
+          "surname": "Martin",
+          "sex": "female",
+          "birth_date": {"day": 3, "month": 5, "year": 1955},
+          "birth_place": "Lyon, France"
+        },
+        {
+          "op": "create_person",
+          "first_name": "Pierre",
+          "surname": "Bernard",
+          "sex": "male",
+          "birth_date": {"day": 22, "month": 11, "year": 1920},
+          "birth_place": "Marseille, France"
+        }
+      ]
+    },
+    {
+      "id": "PERSON-002",
+      "description": "Person with complete data",
+      "operations": [
+        {
+          "op": "create_person",
+          "first_name": "Jacques",
+          "surname": "Leclerc",
+          "sex": "male",
+          "birth_date": {"day": 10, "month": 6, "year": 1930},
+          "birth_place": "Bordeaux, France",
+          "death_date": {"day": 25, "month": 12, "year": 2010},
+          "death_place": "Nice, France",
+          "occupation": "Engineer",
+          "public_name": "Jacques Leclerc de Hauteclocque"
+        }
+      ]
+    },
+    {
+      "id": "PERSON-003",
+      "description": "Person name formatting",
+      "operations": [
+        {"op": "format_name", "first_name": "jean-baptiste", "surname": "POQUELIN"},
+        {"op": "format_name", "first_name": "Marie-Antoinette", "surname": "d'Autriche"},
+        {"op": "format_name", "first_name": "charles", "surname": "DE GAULLE"}
+      ]
+    },
+    {
+      "id": "PERSON-004",
+      "description": "Person validation",
+      "operations": [
+        {
+          "op": "validate_person",
+          "first_name": "Jean",
+          "surname": "Dupont",
+          "sex": "male"
+        },
+        {
+          "op": "validate_person",
+          "first_name": "",
+          "surname": "Dupont",
+          "sex": "male"
+        },
+        {
+          "op": "validate_person",
+          "first_name": "Jean",
+          "surname": "",
+          "sex": "male"
+        },
+        {
+          "op": "validate_person",
+          "first_name": "Jean",
+          "surname": "Dupont",
+          "sex": "invalid"
+        }
+      ]
+    },
+    {
+      "id": "PERSON-005",
+      "description": "Person key generation",
+      "operations": [
+        {"op": "generate_key", "first_name": "Jean", "surname": "Dupont", "occ": 0},
+        {"op": "generate_key", "first_name": "Jean", "surname": "Dupont", "occ": 1},
+        {"op": "generate_key", "first_name": "Marie", "surname": "Martin", "occ": 0}
+      ]
+    }
+  ]
+}

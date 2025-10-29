@@ -1,0 +1,74 @@
+<div class="min-h-screen bg-white py-8 px-4">
+  <!-- Header avec logo -->
+  <div class="max-w-4xl mx-auto mb-8">
+    <div class="flex items-center mb-6">
+      <img src="assets/gwlogo.png" alt="GeneWeb Logo" class="h-16 w-auto mr-4" />
+      <h1 class="text-3xl font-bold text-gray-800">{{ translate.t('title') }}</h1>
+    </div>
+
+    <!-- Loading state -->
+    <div *ngIf="loading" class="text-center py-8">
+      <p class="text-gray-600">{{ translate.t('loading') }}</p>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      {{ translate.t('error_loading') }}
+    </div>
+
+    <!-- Main content -->
+    <div *ngIf="!loading && databases.length > 0" class="bg-white">
+      <ul class="list-disc ml-6 mb-6">
+        <li class="mb-4">
+          <span>{{ translate.t('change_names') }}</span>
+          <div class="mt-2 flex items-center gap-2">
+            <select 
+              [(ngModel)]="selectedDb" 
+              (change)="onDatabaseChange()"
+              class="border border-gray-300 rounded px-3 py-2 bg-white">
+              <option *ngFor="let db of databases" [value]="db.name">{{ db.name }}</option>
+            </select>
+            <input 
+              [(ngModel)]="newName"
+              type="text" 
+              [value]="selectedDb"
+              class="border border-blue-400 rounded px-3 py-2 flex-1 max-w-md"
+              [placeholder]="translate.t('new_name_placeholder')">
+          </div>
+        </li>
+        <li>
+          <span>{{ translate.t('then_click') }}</span>
+          <div class="mt-2">
+            <button 
+              (click)="onRename()"
+              class="bg-gray-200 hover:bg-gray-300 border border-gray-400 rounded px-4 py-2 text-gray-800 font-medium">
+              {{ translate.t('rename_button') }}
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- No databases found -->
+    <div *ngIf="!loading && databases.length === 0" class="text-center py-8">
+      <p class="text-gray-600">{{ translate.t('no_databases') }}</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t pt-4 mt-8 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <img src="assets/gwlogo.png" alt="GeneWeb" class="h-8 w-auto" />
+        <span class="text-sm text-gray-600">{{ translate.t('footer') }}</span>
+      </div>
+    </footer>
+
+    <!-- Back button -->
+    <div class="mt-6">
+      <button 
+        (click)="goBack()"
+        class="text-blue-600 hover:underline text-sm">
+        {{ translate.t('back_home') }}
+      </button>
+    </div>
+  </div>
+</div>

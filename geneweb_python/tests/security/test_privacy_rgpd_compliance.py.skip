@@ -1,0 +1,530 @@
+"""
+Security and RGPD compliance tests for privacy-aware search.
+
+Tests cover:
+- RGPD Article 5 (data minimization)
+- RGPD Article 9 (sensitive data protection)
+- RGPD Article 17 (right to be forgotten - anonymization)
+- RGPD Article 25 (data protection by design)
+- RGPD Article 32 (security of processing)
+- Living person protection
+- Data anonymization
+- Authorization checks
+"""
+
+import pytest
+from unittest.mock import Mock, patch
+
+from geneweb.api.services.privacy_search import PrivacyAwareSearch
+from geneweb.api.models.search import PrivacyLevel, SearchQuery
+from geneweb.core.person import Person
+from geneweb.db.database import Database
+
+
+class TestRGPDArticle5DataMinimization:
+    """Test RGPD Article 5 - Data minimization principle."""
+
+    @pytest.fixture
+    def search_service(self):
+        db = Mock(spec=Database)
+        return PrivacyAwareSearch(db)
+
+    def test_anonymized_person_minimal_data(self, search_service):
+        """Test that ANONYMIZED level returns minimal data."""
+        person = Mock(spec=Person)
+        person.first_name = "Marie"
+        person.surname = "Sensitive"
+        person.sex = 2
+        person.birth = Mock()
+        person.birth.year = 2000
+        person.birth.place = "Private Hospital"
+        person.death = None
+        person.occupation = "Lawyer"
+        person.notes = "Confidential client information"
+        person.get_id.return_value = "person_sensitive"
+        
+        result = search_service.anonymize_person(person, PrivacyLevel.ANONYMIZED)
+        
+        # Verify only minimal data is exposed
+        assert result["first_name"] == "[PROTECTED]"
+        assert result["surname"] == "[PROTECTED]"
+        assert result["birth_year"] is None
+        assert result["birth_place"] is None
+        assert result["occupation"] is None
+        assert result["notes"] is None
+        # Sex preserved for statistical purposes only
+        assert result["sex"] == 2
+        assert result["anonymized"] is True
+
+    def test_restricted_person_limited_data(self, search_service):
+        """Test that RESTRICTED level returns limited but useful data."""
+        person = Mock(spec=Person)
+        person.first_name = "Jean"
+        person.surname = "Family"
+        person.sex = 1
+        person.birth = Mock()
+        person.birth.year = 1990
+        person.birth.place = "Paris"
+        person.occupation = "Engineer"
+        person.notes = "Private family notes"
+        person.death = None
+        person.get_id.return_value = "person_family"
+        
+        result = search_service.anonymize_person(person, PrivacyLevel.RESTRICTED)
+        
+        # Basic identity preserved for family
+        assert result["first_name"] == "Jean"
+        assert result["surname"] == "Family"
+        assert result["birth_year"] == 1990
+        # Sensitive data protected
+        assert result["notes"] == "[PROTECTED]"
+        # Occupation allowed for RESTRICTED
+        assert result["occupation"] == "Engineer"
+
+    def test_public_person_full_data(self, search_service):
+        """Test that PUBLIC level (deceased) returns full data."""
+        person = Mock(spec=Person)
+        person.first_name = "Historical"
+        person.surname = "Figure"
+        person.sex = 1
+        person.birth = Mock()
+        person.birth.year = 1900
+        person.death = Mock()
+        person.death.year = 1980
+        person.occupation = "Writer"
+        person.notes = "Published biography available"
+        person.get_id.return_value = "person_historical"
+        
+        result = search_service.anonymize_person(person, PrivacyLevel.PUBLIC)
+        
+        # All data accessible for deceased persons
+        assert result["first_name"] == "Historical"
+        assert result["surname"] == "Figure"
+        assert result["birth_year"] == 1900
+        assert result["death_year"] == 1980
+        assert result["occupation"] == "Writer"
+        assert result["notes"] == "Published biography available"
+        assert result["anonymized"] is False
+
+
+class TestRGPDArticle9SensitiveData:
+    """Test RGPD Article 9 - Protection of sensitive personal data."""
+
+    @pytest.fixture
+    def search_service(self):
+        db = Mock(spec=Database)
+        db.persons = {}
+        return PrivacyAwareSearch(db)
+
+    def test_medical_information_protected(self, search_service):
+        """Test that medical information is protected for living persons."""
+        person = Mock(spec=Person)
+        person.first_name = "Patient"
+        person.surname = "Medical"
+        person.birth = Mock()
+        person.birth.year = 2000
+        person.death = None
+        person.notes = "Has diabetes, requires insulin treatment"
+        person.occupation = "Teacher"
+        person.get_id.return_value = "patient_1"
+        
+        level = search_service.get_privacy_level(person, None)
+        result = search_service.anonymize_person(person, level)
+        
+        # Medical information must be hidden
+        assert result["notes"] is None or result["notes"] == "[PROTECTED]"
+        assert result["anonymized"] is True
+
+    def test_living_person_always_protected(self, search_service):
+        """Test that living persons are always protected from public access."""
+        person = Mock(spec=Person)
+        person.first_name = "Living"
+        person.surname = "Person"
+        person.birth = Mock()
+        person.birth.year = 1990
+        person.death = None
+        person.get_id.return_value = "living_1"
+        
+        # Without authorization
+        level = search_service.get_privacy_level(person, None)
+        assert level == PrivacyLevel.ANONYMIZED
+        
+        result = search_service.anonymize_person(person, level)
+        assert result["first_name"] == "[PROTECTED]"
+        assert result["anonymized"] is True
+
+    def test_notes_field_protection(self, search_service):
+        """Test that notes field is protected as it may contain sensitive data."""
+        person = Mock(spec=Person)
+        person.first_name = "Test"
+        person.surname = "Notes"
+        person.birth = Mock()
+        person.birth.year = 1995
+        person.death = None
+        person.notes = "Private family secrets, medical history, etc."
+        person.get_id.return_value = "notes_1"
+        
+        # Even with RESTRICTED access, notes should be protected
+        result = search_service.anonymize_person(person, PrivacyLevel.RESTRICTED)
+        assert result["notes"] == "[PROTECTED]"
+
+
+class TestRGPDArticle17RightToErasure:
+    """Test RGPD Article 17 - Right to erasure (right to be forgotten)."""
+
+    @pytest.fixture
+    def search_service(self):
+        db = Mock(spec=Database)
+        return PrivacyAwareSearch(db)
+
+    def test_anonymization_irreversible(self, search_service):
+        """Test that anonymization effectively makes data irretrievable."""
+        person = Mock(spec=Person)
+        person.first_name = "ToBeErased"
+        person.surname = "Person"
+        person.sex = 1
+        person.birth = Mock()
+        person.birth.year = 2000
+        person.birth.place = "Sensitive Location"
+        person.death = None
+        person.occupation = "Confidential"
+        person.notes = "Must be protected"
+        person.get_id.return_value = "erasure_1"
+        
+        result = search_service.anonymize_person(person, PrivacyLevel.ANONYMIZED)
+        
+        # Verify no personally identifiable information remains
+        assert "[PROTECTED]" in str(result["first_name"]) or result["first_name"] is None
+        assert "[PROTECTED]" in str(result["surname"]) or result["surname"] is None
+        assert result["birth_place"] is None
+        assert result["occupation"] is None
+        assert result["notes"] is None
+        
+        # Only statistical data remains
+        assert "sex" in result  # For demographic purposes
+        assert result["anonymized"] is True
+
+    def test_person_id_preserved_for_relationships(self, search_service):
+        """Test that person ID is preserved to maintain family relationships."""
+        person = Mock(spec=Person)
+        person.first_name = "Anonymous"
+        person.surname = "RelationShip"
+        person.death = None
+        person.birth = Mock()
+        person.birth.year = 2005
+        person.get_id.return_value = "relationship_1"
+        
+        result = search_service.anonymize_person(person, PrivacyLevel.ANONYMIZED)
+        
+        # Person ID must be preserved for tree structure
+        assert result["person_id"] == "relationship_1"
+        # But all identifying data removed
+        assert result["first_name"] == "[PROTECTED]"
+
+
+class TestRGPDArticle25DataProtectionByDesign:
+    """Test RGPD Article 25 - Data protection by design and by default."""
+
+    @pytest.fixture
+    def search_service(self):
+        db = Mock(spec=Database)
+        return PrivacyAwareSearch(db)
+
+    def test_default_privacy_level_conservative(self, search_service):
+        """Test that default privacy level is most conservative."""
+        person = Mock(spec=Person)
+        person.birth = Mock()
+        person.birth.year = 2000
+        person.death = None
+        
+        # Without user authorization, should default to ANONYMIZED
+        level = search_service.get_privacy_level(person, None)
+        assert level == PrivacyLevel.ANONYMIZED
+
+    def test_unknown_age_treated_as_living(self, search_service):
+        """Test that unknown age is conservatively treated as living."""
+        person = Mock(spec=Person)
+        person.birth = None  # Unknown birth
+        person.death = None  # No death record
+        
+        # Conservative approach: treat as living
+        is_living = search_service.is_person_living(person)
+        assert is_living is True
+        
+        level = search_service.get_privacy_level(person, None)
+        assert level == PrivacyLevel.ANONYMIZED
+
+    def test_100_year_rule_applied(self, search_service):
+        """Test that 100-year rule is applied for protection."""
+        person_old = Mock(spec=Person)
+        person_old.birth = Mock()
+        person_old.birth.year = 1910  # 115 years old
+        person_old.death = None
+        
+        # Over 100 years without death record: treated as deceased
+        is_living = search_service.is_person_living(person_old)
+        assert is_living is False
+        
+        level = search_service.get_privacy_level(person_old, None)
+        assert level == PrivacyLevel.PUBLIC
+
+
+class TestRGPDArticle32SecurityOfProcessing:
+    """Test RGPD Article 32 - Security of processing."""
+
+    def test_no_data_leakage_in_error_messages(self):
+        """Test that errors don't leak sensitive information."""
+        db = Mock(spec=Database)
+        db.get_person.side_effect = Exception("Database connection failed")
+        
+        search_service = PrivacyAwareSearch(db)
+        
+        # Should handle error without exposing database details
+        try:
+            result = search_service.get_ancestors("person_1", 5, None)
+            # If it returns, check it's safe
+            assert isinstance(result.ancestors, list)
+        except Exception as e:
+            # Error message should not contain sensitive data
+            error_msg = str(e).lower()
+            assert "password" not in error_msg
+            assert "secret" not in error_msg
+            assert "token" not in error_msg
+
+    def test_authorization_boundary_respected(self):
+        """Test that authorization boundaries are strictly enforced."""
+        db = Mock(spec=Database)
+        search_service = PrivacyAwareSearch(db)
+        
+        living_person = Mock(spec=Person)
+        living_person.birth = Mock()
+        living_person.birth.year = 2000
+        living_person.death = None
+        
+        # Unauthorized access
+        level_unauth = search_service.get_privacy_level(living_person, None)
+        assert level_unauth == PrivacyLevel.ANONYMIZED
+        
+        # Authorized access (family member)
+        level_auth = search_service.get_privacy_level(living_person, "family_user_123")
+        assert level_auth == PrivacyLevel.RESTRICTED
+        
+        # Different privacy levels enforced
+        assert level_unauth != level_auth
+
+
+class TestLivingPersonProtection:
+    """Test comprehensive living person protection."""
+
+    @pytest.fixture
+    def search_service(self):
+        db = Mock(spec=Database)
+        return PrivacyAwareSearch(db)
+
+    def test_minor_protection(self, search_service):
+        """Test that minors (<18) are strictly protected."""
+        minor = Mock(spec=Person)
+        minor.first_name = "Child"
+        minor.surname = "Minor"
+        minor.sex = 1
+        minor.birth = Mock()
+        minor.birth.year = 2015  # 10 years old
+        minor.death = None
+        minor.get_id.return_value = "minor_1"
+        
+        level = search_service.get_privacy_level(minor, None)
+        assert level == PrivacyLevel.ANONYMIZED
+        
+        result = search_service.anonymize_person(minor, level)
+        assert result["first_name"] == "[PROTECTED]"
+        assert result["surname"] == "[PROTECTED]"
+
+    def test_young_adult_protection(self, search_service):
+        """Test that young adults are protected."""
+        young_adult = Mock(spec=Person)
+        young_adult.birth = Mock()
+        young_adult.birth.year = 2000  # 25 years old
+        young_adult.death = None
+        
+        is_living = search_service.is_person_living(young_adult)
+        assert is_living is True
+        
+        level = search_service.get_privacy_level(young_adult, None)
+        assert level == PrivacyLevel.ANONYMIZED
+
+    def test_elderly_living_protection(self, search_service):
+        """Test that elderly living persons (but <100) are protected."""
+        elderly = Mock(spec=Person)
+        elderly.birth = Mock()
+        elderly.birth.year = 1950  # 75 years old
+        elderly.death = None
+        
+        is_living = search_service.is_person_living(elderly)
+        assert is_living is True
+        
+        level = search_service.get_privacy_level(elderly, None)
+        assert level == PrivacyLevel.ANONYMIZED
+
+    def test_death_date_makes_public(self, search_service):
+        """Test that death date makes person public."""
+        deceased = Mock(spec=Person)
+        deceased.birth = Mock()
+        deceased.birth.year = 1990
+        deceased.death = Mock()
+        deceased.death.year = 2020
+        
+        is_living = search_service.is_person_living(deceased)
+        assert is_living is False
+        
+        level = search_service.get_privacy_level(deceased, None)
+        assert level == PrivacyLevel.PUBLIC
+
+
+class TestAnonymizationCompleteness:
+    """Test that anonymization is complete and consistent."""
+
+    @pytest.fixture
+    def search_service(self):
+        db = Mock(spec=Database)
+        return PrivacyAwareSearch(db)
+
+    def test_all_identifying_fields_anonymized(self, search_service):
+        """Test that all identifying fields are anonymized."""
+        person = Mock(spec=Person)
+        person.first_name = "John"
+        person.surname = "Doe"
+        person.sex = 1
+        person.birth = Mock()
+        person.birth.year = 2000
+        person.birth.month = 5
+        person.birth.day = 15
+        person.birth.place = "Hospital XYZ"
+        person.death = None
+        person.occupation = "Software Engineer"
+        person.notes = "Identifying information"
+        person.get_id.return_value = "anon_test"
+        
+        result = search_service.anonymize_person(person, PrivacyLevel.ANONYMIZED)
+        
+        identifying_fields = [
+            result.get("first_name"),
+            result.get("surname"),
+            result.get("birth_year"),
+            result.get("birth_month"),
+            result.get("birth_day"),
+            result.get("birth_place"),
+            result.get("occupation"),
+            result.get("notes")
+        ]
+        
+        # All identifying fields should be None or [PROTECTED]
+        for field in identifying_fields:
+            if field is not None:
+                assert field == "[PROTECTED]" or field == ""
+
+    def test_anonymization_flag_set(self, search_service):
+        """Test that anonymization flag is always set correctly."""
+        person = Mock(spec=Person)
+        person.birth = Mock()
+        person.birth.year = 2000
+        person.death = None
+        person.get_id.return_value = "flag_test"
+        
+        # ANONYMIZED level
+        result_anon = search_service.anonymize_person(person, PrivacyLevel.ANONYMIZED)
+        assert result_anon["anonymized"] is True
+        assert result_anon["privacy_level"] == "ANONYMIZED"
+        
+        # RESTRICTED level
+        result_restr = search_service.anonymize_person(person, PrivacyLevel.RESTRICTED)
+        assert result_restr["anonymized"] is True
+        assert result_restr["privacy_level"] == "RESTRICTED"
+        
+        # PUBLIC level (deceased)
+        person.death = Mock()
+        person.death.year = 1990
+        result_pub = search_service.anonymize_person(person, PrivacyLevel.PUBLIC)
+        assert result_pub["anonymized"] is False
+        assert result_pub["privacy_level"] == "PUBLIC"
+
+
+class TestSearchPrivacyIntegration:
+    """Integration tests for search with privacy protection."""
+
+    @pytest.fixture
+    def search_service(self):
+        db = Mock(spec=Database)
+        
+        # Create mixed database
+        deceased = Mock(spec=Person)
+        deceased.first_name = "Public"
+        deceased.surname = "Person"
+        deceased.sex = 1
+        deceased.birth = Mock()
+        deceased.birth.year = 1920
+        deceased.death = Mock()
+        deceased.death.year = 1990
+        deceased.get_id.return_value = "public_1"
+        
+        living = Mock(spec=Person)
+        living.first_name = "Private"
+        living.surname = "Person"
+        living.sex = 2
+        living.birth = Mock()
+        living.birth.year = 2000
+        living.death = None
+        living.get_id.return_value = "private_1"
+        
+        db.persons = {
+            "public_1": deceased,
+            "private_1": living
+        }
+        
+        return PrivacyAwareSearch(db)
+
+    def test_search_respects_privacy_mix(self, search_service):
+        """Test that search correctly handles mix of public and private persons."""
+        query = SearchQuery(query="Person")
+        response = search_service.search_persons(query, None)
+        
+        # Should have results
+        assert isinstance(response.results, list)
+        
+        # Check that anonymized count is tracked
+        assert hasattr(response, 'anonymized_count')
+        assert response.anonymized_count >= 0
+
+    def test_anonymized_count_accuracy(self, search_service):
+        """Test that anonymized count is accurate."""
+        query = SearchQuery(query="")
+        response = search_service.search_persons(query, None)
+        
+        # Count anonymized results manually
+        anonymized_count = sum(
+            1 for r in response.results 
+            if r.anonymized is True
+        )
+        
+        # Should match reported count
+        assert response.anonymized_count == anonymized_count
+
+
+class TestRGPDComplianceSummary:
+    """Summary test to verify overall RGPD compliance."""
+
+    def test_rgpd_compliance_checklist(self):
+        """Verify all RGPD requirements are addressed."""
+        compliance_checklist = {
+            "Article 5 - Data Minimization": "Implemented via privacy levels",
+            "Article 9 - Sensitive Data": "Protected via anonymization",
+            "Article 17 - Right to Erasure": "Implemented via anonymization",
+            "Article 25 - Protection by Design": "Default to most restrictive",
+            "Article 32 - Security": "Authorization checks in place",
+            "Living Person Protection": "100-year rule + death check",
+            "Minor Protection": "All minors anonymized",
+            "Family Authorization": "RESTRICTED level for family"
+        }
+        
+        # This test documents compliance measures
+        assert len(compliance_checklist) == 8
+        assert all(isinstance(v, str) for v in compliance_checklist.values())

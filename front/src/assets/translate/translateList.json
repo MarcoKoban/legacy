@@ -1,0 +1,56 @@
+{
+  "fr": {
+    "title": "Bases de données",
+    "firstText": "Pour consulter une base de données, il faut que le service gwd soit lancé.",
+    "secondText": "Ou revenez au menu principal.",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "en": {
+    "title": "Databases",
+    "firstText": "To consult a database, the gwd service must be running.",
+    "secondText": "Or return to the main menu.",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "co": {
+    "title": "Basi di dati",
+    "firstText": "Per consultà una basa di dati, u serviziu gwd deve esse avviatu.",
+    "secondText": "O vultate à u menù principale.",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "de": {
+    "title": "Datenbanken",
+    "firstText": "Um eine Datenbank zu konsultieren, muss der gwd-Dienst gestartet sein.",
+    "secondText": "Oder kehren Sie zum Hauptmenü zurück.",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "es": {
+    "title": "Bases de datos",
+    "firstText": "Para consultar una base de datos, el servicio gwd debe estar iniciado.",
+    "secondText": "O vuelva al menú principal.",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "it": {
+    "title": "Basi di dati",
+    "firstText": "Per consultare una base di dati, il servizio gwd deve essere avviato.",
+    "secondText": "Oppure torna al menu principale.",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "lv": {
+    "title": "Datubāzes",
+    "firstText": "Lai apskatītu datubāzi, gwd serviss ir jādarbojas.",
+    "secondText": "Vai atgriezieties galvenajā izvēlnē.",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "sv": {
+    "title": "Databaser",
+    "firstText": "För att konsultera en databas måste gwd-tjänsten vara igång.",
+    "secondText": "Eller gå tillbaka till huvudmenyn.",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "fi": {
+    "title": "Tietokannat",
+    "firstText": "Tietokannan tarkasteluun gwd-palvelun on oltava käynnissä.",
+    "secondText": "Tai palaa päävalikkoon.",
+    "footer": "Versio 7.1-beta Copyright © 1998-2021"
+  }
+}

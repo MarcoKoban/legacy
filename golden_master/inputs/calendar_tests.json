@@ -1,0 +1,65 @@
+{
+  "test_suite": "Calendar and Date Systems",
+  "description": "Test inputs for multi-calendar date system conversions",
+  "tests": [
+    {
+      "id": "CAL-001",
+      "description": "Gregorian date validation",
+      "operations": [
+        {"op": "gregorian_validate", "day": 15, "month": 8, "year": 1995},
+        {"op": "gregorian_validate", "day": 1, "month": 1, "year": 2000},
+        {"op": "gregorian_validate", "day": 31, "month": 12, "year": 1999},
+        {"op": "gregorian_validate", "day": 29, "month": 2, "year": 2000},
+        {"op": "gregorian_validate", "day": 29, "month": 2, "year": 2001}
+      ]
+    },
+    {
+      "id": "CAL-002",
+      "description": "Gregorian to Julian conversion",
+      "operations": [
+        {"op": "gregorian_to_julian", "day": 15, "month": 8, "year": 1995},
+        {"op": "gregorian_to_julian", "day": 1, "month": 1, "year": 2000},
+        {"op": "gregorian_to_julian", "day": 25, "month": 12, "year": 1582},
+        {"op": "gregorian_to_julian", "day": 14, "month": 7, "year": 1789}
+      ]
+    },
+    {
+      "id": "CAL-003",
+      "description": "Gregorian to French Republican conversion",
+      "operations": [
+        {"op": "gregorian_to_french", "day": 22, "month": 9, "year": 1792},
+        {"op": "gregorian_to_french", "day": 1, "month": 1, "year": 1794},
+        {"op": "gregorian_to_french", "day": 14, "month": 7, "year": 1789},
+        {"op": "gregorian_to_french", "day": 10, "month": 8, "year": 1793}
+      ]
+    },
+    {
+      "id": "CAL-004",
+      "description": "Gregorian to Hebrew conversion",
+      "operations": [
+        {"op": "gregorian_to_hebrew", "day": 1, "month": 1, "year": 2000},
+        {"op": "gregorian_to_hebrew", "day": 15, "month": 4, "year": 1948},
+        {"op": "gregorian_to_hebrew", "day": 25, "month": 12, "year": 2023}
+      ]
+    },
+    {
+      "id": "CAL-005",
+      "description": "Date formatting",
+      "operations": [
+        {"op": "format_date", "day": 15, "month": 8, "year": 1995, "calendar": "gregorian"},
+        {"op": "format_date", "day": 1, "month": 1, "year": 2000, "calendar": "gregorian"},
+        {"op": "format_date", "day": 14, "month": 7, "year": 1789, "calendar": "gregorian"}
+      ]
+    },
+    {
+      "id": "CAL-006",
+      "description": "Round-trip conversions",
+      "operations": [
+        {"op": "roundtrip_julian", "day": 15, "month": 8, "year": 1995},
+        {"op": "roundtrip_julian", "day": 1, "month": 1, "year": 2000},
+        {"op": "roundtrip_french", "day": 22, "month": 9, "year": 1792},
+        {"op": "roundtrip_hebrew", "day": 1, "month": 1, "year": 2000}
+      ]
+    }
+  ]
+}

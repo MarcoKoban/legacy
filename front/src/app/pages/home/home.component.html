@@ -1,0 +1,89 @@
+<div class="bg-no-repeat bg-left-top flex items-center h-24 relative" style="background-image: url('assets/gwlogo.png');">
+  <h1 class="w-full text-center text-4xl font-bold text-green-700 m-0 leading-[95px] ml-0">{{ translate.t('title') }}</h1>
+  
+  <!-- Bouton de déconnexion en haut à droite -->
+  <button 
+    (click)="logout()" 
+    class="absolute right-4 top-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
+    </svg>
+    {{ translate.t('logout') }}
+  </button>
+</div>
+
+<div class="max-w-3xl mx-auto border-2 border-blue-200 rounded-lg p-6 mb-8 flex justify-between bg-white">
+  <div class="w-1/2 pr-6">
+    <div class="mb-4">
+      <span class="font-semibold">{{ translate.t('consult') }}</span>
+      <ul class="list-disc ml-6">
+        <li>{{ translate.t('existing_trees') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event, '/list')">list</a>)</li>
+        <li>{{ translate.t('errors_stats') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event, '/traces')">errors</a>)</li>
+      </ul>
+    </div>
+    <div>
+      <span class="font-semibold">{{ translate.t('save') }}</span>
+      <ul class="list-disc ml-6">
+        <li>{{ translate.t('gedcom_file') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">gwb2ged</a>)</li>
+        <li>{{ translate.t('geneweb_file') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">gwu</a>)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="w-1/2 pl-6">
+    <span class="font-semibold">{{ translate.t('create_tree') }}</span>
+    <ul class="list-disc ml-6">
+      <li>{{ translate.t('from_gedcom') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event, '/ged2Gwb')">ged2gwb</a>)</li>
+      <li>{{ translate.t('from_geneweb') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event, '/gwc')">gwc</a>)</li>
+      <li>{{ translate.t('from_empty') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event, '/simple')">gwc</a>)</li>
+    </ul>
+  </div>
+</div>
+
+<hr class="my-6 border-gray-300">
+
+<div class="max-w-5xl flex mb-8 ml-2">
+  <div>
+    <span class="font-semibold">{{ translate.t('advanced_options') }}</span>
+    <ul class="list-disc ml-6">
+      <li class="ml-6">{{ translate.t('cleanup') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">cleanup</a>)</li>
+      <li class="ml-6">{{ translate.t('rename') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event, '/rename')">rename</a>)</li>
+      <li class="ml-6">{{ translate.t('delete') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">delete</a>)</li>
+      <li class="ml-6">{{ translate.t('merge') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">merge</a>)</li>
+      <li class="ml-6">{{ translate.t('backup_restore') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">gwu</a>)</li>
+      <li class="ml-6">{{ translate.t('consang') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">consang</a>)</li>
+      <li class="ml-6">{{ translate.t('update_nldb') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">update_nldb</a>)</li>
+      <li class="ml-6">{{ translate.t('connex') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">connex</a>)</li>
+      <li class="ml-6">{{ translate.t('gwdiff') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">gwdiff</a>)</li>
+      <li class="ml-6">{{ translate.t('gwfixbase') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">gwfixbase</a>)</li>
+    </ul>
+  </div>
+  <div>
+    <span class="font-semibold">{{ translate.t('configure') }}</span>
+    <ul class="list-disc ml-6">
+      <li class="ml-6">{{ translate.t('db_params') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">.gwf</a>)</li>
+      <li class="ml-6">{{ translate.t('gwd_params') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">gwd</a>)</li>
+      <li class="ml-6">{{ translate.t('cache_files') }} (<a href="#" class="text-blue-700 underline" (click)="goToLink($event)">cache_files</a>)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="max-w-5xl mb-6 ml-2">
+  <span>
+    {{ translate.t('documentation') }}
+    (<a href="#" class="text-blue-700 underline" (click)="openNewTab('http://geneweb.tuxfamily.org/wiki/manual')">{{ translate.t('doc') }}</a>)
+  </span>
+</div>
+
+<div class="max-w-5xl mb-8 ml-2">
+  <span>{{ translate.t('display_in') }}</span>
+  <ng-container *ngFor="let lang of languages">
+    <a href="#" class="text-blue-700 underline mr-4" (click)="changeLang($event, lang.code)">{{ lang.label }}</a>
+  </ng-container>
+</div>
+
+<footer class="max-w-xl flex items-center justify-start border-t pt-4 text-sm text-gray-600 mt-8 ml-0">
+  <img src="assets/gwlogo.png" alt="GeneWeb"
+    class="h-8 w-28 p-0.5 bg-gray-100 border border-gray-400 rounded shadow cursor-pointer hover:bg-gray-200"
+    (click)="goToLink($event, 'https://github.com/geneweb/geneweb/')" />
+  <span class="ml-2 font-bold">{{ translate.t('footer') }}</span>
+</footer>

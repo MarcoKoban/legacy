@@ -1,0 +1,194 @@
+{
+  "test_suite": "Sosa Basic Tests",
+  "description": "Tests basiques pour la numérotation Sosa",
+  "tests": [
+    {
+      "id": "SOSA-BASIC-001",
+      "description": "Conversion entier vers Sosa",
+      "operations": [
+        {
+          "op": "from_int",
+          "value": 1,
+          "expected": "1"
+        },
+        {
+          "op": "from_int",
+          "value": 2,
+          "expected": "2"
+        },
+        {
+          "op": "from_int",
+          "value": 10,
+          "expected": "10"
+        }
+      ]
+    },
+    {
+      "id": "SOSA-BASIC-002",
+      "description": "Conversion string vers Sosa",
+      "operations": [
+        {
+          "op": "from_string",
+          "value": "1",
+          "expected": "1"
+        },
+        {
+          "op": "from_string",
+          "value": "42",
+          "expected": "42"
+        },
+        {
+          "op": "from_string",
+          "value": "1234",
+          "expected": "1234"
+        }
+      ]
+    },
+    {
+      "id": "SOSA-BASIC-003",
+      "description": "Calcul de génération",
+      "operations": [
+        {
+          "op": "gen",
+          "value": 1,
+          "expected": 1
+        },
+        {
+          "op": "gen",
+          "value": 2,
+          "expected": 2
+        },
+        {
+          "op": "gen",
+          "value": 3,
+          "expected": 2
+        },
+        {
+          "op": "gen",
+          "value": 4,
+          "expected": 3
+        },
+        {
+          "op": "gen",
+          "value": 8,
+          "expected": 4
+        }
+      ]
+    },
+    {
+      "id": "SOSA-BASIC-004",
+      "description": "Addition de nombres Sosa",
+      "operations": [
+        {
+          "op": "add",
+          "a": 1,
+          "b": 1,
+          "expected": "2"
+        },
+        {
+          "op": "add",
+          "a": 5,
+          "b": 10,
+          "expected": "15"
+        },
+        {
+          "op": "add",
+          "a": 100,
+          "b": 200,
+          "expected": "300"
+        }
+      ]
+    },
+    {
+      "id": "SOSA-BASIC-005",
+      "description": "Multiplication de nombres Sosa",
+      "operations": [
+        {
+          "op": "multiply",
+          "a": 2,
+          "b": 3,
+          "expected": "6"
+        },
+        {
+          "op": "multiply",
+          "a": 10,
+          "b": 10,
+          "expected": "100"
+        }
+      ]
+    },
+    {
+      "id": "SOSA-BASIC-006",
+      "description": "Division de nombres Sosa",
+      "operations": [
+        {
+          "op": "divide",
+          "a": 100,
+          "b": 10,
+          "expected": "10"
+        },
+        {
+          "op": "divide",
+          "a": 1000,
+          "b": 100,
+          "expected": "10"
+        }
+      ]
+    },
+    {
+      "id": "SOSA-BASIC-007",
+      "description": "Formatage avec séparateurs",
+      "operations": [
+        {
+          "op": "format_with_sep",
+          "value": 1000,
+          "separator": ",",
+          "expected": "1,000"
+        },
+        {
+          "op": "format_with_sep",
+          "value": 1000000,
+          "separator": ",",
+          "expected": "1,000,000"
+        },
+        {
+          "op": "format_with_sep",
+          "value": 1000,
+          "separator": " ",
+          "expected": "1 000"
+        }
+      ]
+    },
+    {
+      "id": "SOSA-BASIC-008",
+      "description": "Calcul des branches (chemin ancestral)",
+      "operations": [
+        {
+          "op": "branches",
+          "value": 1,
+          "expected": []
+        },
+        {
+          "op": "branches",
+          "value": 2,
+          "expected": [0]
+        },
+        {
+          "op": "branches",
+          "value": 3,
+          "expected": [1]
+        },
+        {
+          "op": "branches",
+          "value": 4,
+          "expected": [0, 0]
+        },
+        {
+          "op": "branches",
+          "value": 5,
+          "expected": [0, 1]
+        }
+      ]
+    }
+  ]
+}

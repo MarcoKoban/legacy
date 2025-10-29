@@ -1,0 +1,85 @@
+{
+  "test_suite": "Sosa Genealogical Numbering",
+  "description": "Test inputs for Sosa numbering system - genealogical reference numbers",
+  "tests": [
+    {
+      "id": "SOSA-001",
+      "description": "Sosa number equality",
+      "operations": [
+        {"op": "from_int", "value": 0, "expected_string": "0"},
+        {"op": "from_int", "value": 1, "expected_string": "1"},
+        {"op": "from_int", "value": 2, "expected_string": "2"},
+        {"op": "from_int", "value": 10, "expected_string": "10"},
+        {"op": "from_int", "value": 100, "expected_string": "100"}
+      ]
+    },
+    {
+      "id": "SOSA-002",
+      "description": "String to Sosa conversion",
+      "operations": [
+        {"op": "from_string", "value": "0"},
+        {"op": "from_string", "value": "1"},
+        {"op": "from_string", "value": "42"},
+        {"op": "from_string", "value": "1234"},
+        {"op": "from_string", "value": "999999"}
+      ]
+    },
+    {
+      "id": "SOSA-003",
+      "description": "Sosa formatting with separators",
+      "operations": [
+        {"op": "format_with_sep", "value": 1, "separator": ","},
+        {"op": "format_with_sep", "value": 10, "separator": ","},
+        {"op": "format_with_sep", "value": 100, "separator": ","},
+        {"op": "format_with_sep", "value": 1000, "separator": ","},
+        {"op": "format_with_sep", "value": 10000, "separator": ","},
+        {"op": "format_with_sep", "value": 100000, "separator": ","},
+        {"op": "format_with_sep", "value": 1000000, "separator": ","}
+      ]
+    },
+    {
+      "id": "SOSA-004",
+      "description": "Generation calculation",
+      "operations": [
+        {"op": "gen", "value": 1},
+        {"op": "gen", "value": 2},
+        {"op": "gen", "value": 3},
+        {"op": "gen", "value": 4},
+        {"op": "gen", "value": 5},
+        {"op": "gen", "value": 6},
+        {"op": "gen", "value": 7},
+        {"op": "gen", "value": 8},
+        {"op": "gen", "value": 15},
+        {"op": "gen", "value": 16},
+        {"op": "gen", "value": 31},
+        {"op": "gen", "value": 32}
+      ]
+    },
+    {
+      "id": "SOSA-005",
+      "description": "Branch path calculation",
+      "operations": [
+        {"op": "branches", "value": 1},
+        {"op": "branches", "value": 2},
+        {"op": "branches", "value": 3},
+        {"op": "branches", "value": 38},
+        {"op": "branches", "value": 42},
+        {"op": "branches", "value": 100}
+      ]
+    },
+    {
+      "id": "SOSA-006",
+      "description": "Arithmetic operations",
+      "operations": [
+        {"op": "add", "a": 1, "b": 1},
+        {"op": "add", "a": 5, "b": 10},
+        {"op": "multiply", "a": 2, "b": 3},
+        {"op": "multiply", "a": 10, "b": 100},
+        {"op": "divide", "a": 100, "b": 10},
+        {"op": "divide", "a": 1000, "b": 1000},
+        {"op": "divide", "a": 2000, "b": 1000},
+        {"op": "divide", "a": 234000, "b": 1000}
+      ]
+    }
+  ]
+}

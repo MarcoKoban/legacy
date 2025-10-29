@@ -1,0 +1,80 @@
+# fly.toml app configuration file generated for geneweb-api on 2025-01-23T19:29:09+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'geneweb-api'
+primary_region = 'ams'
+
+[build]
+  dockerfile = 'Dockerfile.fly'
+
+[env]
+  GENEWEB_API_APP_NAME = 'Geneweb API'
+  GENEWEB_API_APP_VERSION = '0.1.0'
+  GENEWEB_API_DEBUG = 'false'
+  GENEWEB_API_HOST = '0.0.0.0'
+  GENEWEB_API_PORT = '8080'  # Must match internal_port
+  GENEWEB_API_WORKERS = '2'
+  GENEWEB_LOG_LOG_FORMAT = 'json'
+  GENEWEB_LOG_LOG_LEVEL = 'INFO'
+  GENEWEB_MONITORING_ENABLE_METRICS = 'true'
+  GENEWEB_MONITORING_HEALTH_CHECK_PATH = '/health'
+  GENEWEB_MONITORING_METRICS_PATH = '/metrics'
+  GENEWEB_SECURITY_CORS_ORIGINS = '["https://geneweb.surge.sh","http://localhost:4200","http://localhost:2316"]'
+  GENEWEB_SECURITY_FORCE_HTTPS = 'false'
+  GENEWEB_SECURITY_HSTS_INCLUDE_SUBDOMAINS = 'true'
+  GENEWEB_SECURITY_HSTS_MAX_AGE = '31536000'
+  GENEWEB_SECURITY_HSTS_PRELOAD = 'true'
+  GENEWEB_SECURITY_RATE_LIMIT_BURST = '200'
+  GENEWEB_SECURITY_RATE_LIMIT_PER_MINUTE = '100'
+  PYTHONDONTWRITEBYTECODE = '1'
+  PYTHONPATH = '/app/src'
+  PYTHONUNBUFFERED = '1'
+
+[[mounts]]
+  source = 'geneweb_data'
+  destination = '/data'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'off'
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 8080
+
+  [[services.ports]]
+    port = 80
+    handlers = ['http']
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ['tls', 'http']
+
+  [services.concurrency]
+    type = 'connections'
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.tcp_checks]]
+    interval = '15s'
+    timeout = '2s'
+    grace_period = '5s'
+
+  [[services.http_checks]]
+    interval = '10s'
+    timeout = '2s'
+    grace_period = '5s'
+    method = 'get'
+    path = '/health/'
+    protocol = 'http'
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1

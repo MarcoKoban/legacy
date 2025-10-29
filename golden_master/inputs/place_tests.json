@@ -1,0 +1,59 @@
+{
+  "test_suite": "Place and Location Management",
+  "description": "Test inputs for geographic location processing",
+  "tests": [
+    {
+      "id": "PLACE-001",
+      "description": "Place name normalization",
+      "operations": [
+        {"op": "normalize", "value": "[foo-bar] - boobar (baz)"},
+        {"op": "normalize", "value": "[foo-bar - boobar (baz)"},
+        {"op": "normalize", "value": "[foo-bar] boobar (baz)"},
+        {"op": "normalize", "value": "Paris, France"},
+        {"op": "normalize", "value": "[Montmartre] - Paris (France)"}
+      ]
+    },
+    {
+      "id": "PLACE-002",
+      "description": "Suburb extraction",
+      "operations": [
+        {"op": "split_suburb", "value": "[foo-bar] - boobar (baz)"},
+        {"op": "split_suburb", "value": "[foo-bar] – boobar (baz)"},
+        {"op": "split_suburb", "value": "[foo-bar] — boobar (baz)"},
+        {"op": "split_suburb", "value": "boobar (baz)"},
+        {"op": "split_suburb", "value": "[Montmartre] - Paris"}
+      ]
+    },
+    {
+      "id": "PLACE-003",
+      "description": "Suburb-only extraction",
+      "operations": [
+        {"op": "get_suburb", "value": "[foo-bar] - boobar (baz)"},
+        {"op": "get_suburb", "value": "boobar (baz)"},
+        {"op": "get_suburb", "value": "[Quartier Latin] - Paris"},
+        {"op": "get_suburb", "value": "Lyon"}
+      ]
+    },
+    {
+      "id": "PLACE-004",
+      "description": "Place without suburb",
+      "operations": [
+        {"op": "without_suburb", "value": "[foo-bar] - boobar (baz)"},
+        {"op": "without_suburb", "value": "boobar (baz)"},
+        {"op": "without_suburb", "value": "[Montmartre] - Paris, France"},
+        {"op": "without_suburb", "value": "Marseille"}
+      ]
+    },
+    {
+      "id": "PLACE-005",
+      "description": "Place comparison",
+      "operations": [
+        {"op": "compare", "a": "Paris", "b": "Paris"},
+        {"op": "compare", "a": "Paris", "b": "Lyon"},
+        {"op": "compare", "a": "Lyon", "b": "Paris"},
+        {"op": "compare", "a": "[Montmartre] - Paris", "b": "Paris"},
+        {"op": "compare", "a": "Bordeaux", "b": "Marseille"}
+      ]
+    }
+  ]
+}

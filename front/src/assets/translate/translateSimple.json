@@ -1,0 +1,74 @@
+{
+  "fr": {
+    "title": "Méthode simple",
+    "firstLine": "Indiquez le nom que vous voulez donner à votre base de données :",
+    "firstButton": "Mode reorg",
+    "SecondLine": "Puis appuyez sur ce bouton",
+    "secondeButton": "Créer",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "en": {
+    "title": "Simple method",
+    "firstLine": "Enter the name you want to give to your database:",
+    "firstButton": "Reorg mode",
+    "SecondLine": "Then press this button",
+    "secondeButton": "Create",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "co": {
+    "title": "Metudu simplice",
+    "firstLine": "Indicate u nome chì vulete dà à a vostra basa di dati:",
+    "firstButton": "Modu reorg",
+    "SecondLine": "Dopu appughjate nant'à stu buttone",
+    "secondeButton": "Creà",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "de": {
+    "title": "Einfache Methode",
+    "firstLine": "Geben Sie den Namen ein, den Sie Ihrer Datenbank geben möchten:",
+    "firstButton": "Reorg-Modus",
+    "SecondLine": "Drücken Sie dann diesen Button",
+    "secondeButton": "Erstellen",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "es": {
+    "title": "Método simple",
+    "firstLine": "Indique el nombre que desea dar a su base de datos:",
+    "firstButton": "Modo reorg",
+    "SecondLine": "Luego pulse este botón",
+    "secondeButton": "Crear",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "it": {
+    "title": "Metodo semplice",
+    "firstLine": "Indica il nome che vuoi dare al tuo database:",
+    "firstButton": "Modalità reorg",
+    "SecondLine": "Poi premi questo pulsante",
+    "secondeButton": "Crea",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "lv": {
+    "title": "Vienkārša metode",
+    "firstLine": "Norādiet vārdu, ko vēlaties dot savai datubāzei:",
+    "firstButton": "Reorganizācijas režīms",
+    "SecondLine": "Pēc tam nospiediet šo pogu",
+    "secondeButton": "Izveidot",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "sv": {
+    "title": "Enkel metod",
+    "firstLine": "Ange namnet du vill ge din databas:",
+    "firstButton": "Reorg-läge",
+    "SecondLine": "Tryck sedan på denna knapp",
+    "secondeButton": "Skapa",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "fi": {
+    "title": "Yksinkertainen menetelmä",
+    "firstLine": "Anna nimi, jonka haluat antaa tietokannallesi:",
+    "firstButton": "Reorg-tila",
+    "SecondLine": "Paina sitten tätä painiketta",
+    "secondeButton": "Luo",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  }
+}

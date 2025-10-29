@@ -1,0 +1,43 @@
+<div class="bg-no-repeat bg-left-top flex items-center h-24" 
+     style="background-image: url('assets/gwlogo.png');"
+     aria-hidden="true"> <!-- Ignorer l'image de fond pour les lecteurs d'écran -->
+  <h1 class="w-full text-center text-4xl font-bold text-green-700 m-0 leading-[95px] ml-0">
+    {{ translate.t('title') }}
+  </h1>
+</div>
+
+<div class="max-w-5xl flex mb-8 ml-0">
+  <div>
+    <ul class="list-disc ml-6" aria-label="Logs et messages d'accueil">
+      <li>
+        <strong>{{ translate.t('commLogContent') }}:</strong>
+        <pre [attr.aria-label]="translate.t('commLogContent')" class="ml-6">
+          - {{ commLog }}
+        </pre>
+      </li>
+
+      <li>
+        <strong>{{ translate.t('gwsetupLogContent') }}:</strong>
+        <pre [attr.aria-label]="translate.t('gwsetupLogContent')" class="ml-6">
+          - {{ gwsetupLog }}
+        </pre>
+      </li>
+
+      <li>
+        {{ translate.t('welcome') }}
+        (<a href="#" class="text-blue-700 underline" (click)="goToLink($event, '/home')">
+          welcome
+        </a>)
+      </li>
+    </ul>
+  </div>
+</div>
+
+<footer class="max-w-xl flex items-center justify-start border-t pt-4 text-sm text-gray-600 mt-8 ml-0">
+  <img src="assets/gwlogo.png" alt="GeneWeb sur GitHub"
+     class="h-8 w-28 p-0.5 bg-gray-100 border border-gray-400 rounded shadow cursor-pointer hover:bg-gray-200"
+     (click)="goToLink($event, 'https://github.com/geneweb/geneweb/')"
+     role="link"
+     aria-label="Ouvrir GeneWeb sur GitHub" />
+  <span class="ml-2 font-bold">{{ translate.t('footer') }}</span>
+</footer>

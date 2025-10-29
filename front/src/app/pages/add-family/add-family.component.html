@@ -1,0 +1,511 @@
+<div class="min-h-screen bg-gray-50 py-6 px-4">
+  <!-- Navigation en haut -->
+  <div class="max-w-6xl mx-auto mb-6 flex items-center justify-center gap-6 text-sm">
+    <button (click)="scrollToSection('parents-section')" class="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+      <span>👫</span> {{ translate.t('parents') }}
+    </button>
+    <button (click)="scrollToSection('events-section')" class="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+      <span>🎓</span> {{ translate.t('events') }}
+    </button>
+    <button (click)="scrollToSection('children-section')" class="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+      <span>👶</span> {{ translate.t('children') }}
+    </button>
+    <button (click)="scrollToSection('sources-section')" class="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+      <span>⭐</span> {{ translate.t('sources') }}
+    </button>
+    <button (click)="scrollToSection('comments-section')" class="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+      <span>📄</span> {{ translate.t('comment') }}
+    </button>
+  </div>
+
+  <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">{{ translate.t('add_family_title') }}</h1>
+
+    <form (ngSubmit)="onSubmit()">
+      <!-- SECTION PARENTS -->
+      <div id="parents-section" class="mb-8">
+        <h2 class="text-2xl font-semibold text-center bg-gray-100 py-3 mb-6 rounded">{{ translate.t('parents') }}</h2>
+
+        <!-- Parent H (Homme) -->
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('first_name_m') }}</label>
+          <input [(ngModel)]="parentH.firstName" name="parentHFirstName" type="text" [placeholder]="translate.t('first_name_m')" class="col-span-7 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentH.number" name="parentHNumber" type="text" class="col-span-3 border border-gray-300 rounded px-3 py-2">
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('surname') }}</label>
+          <input [(ngModel)]="parentH.lastName" name="parentHLastName" type="text" [placeholder]="translate.t('surname')" class="col-span-7 border border-gray-300 rounded px-3 py-2">
+          <select class="col-span-3 border border-gray-300 rounded px-3 py-2">
+            <option>{{ translate.t('create') }}</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('birth') }}</label>
+          <input [(ngModel)]="parentH.birthDay" name="parentHBirthDay" type="text" placeholder="jj" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentH.birthMonth" name="parentHBirthMonth" type="text" placeholder="mm" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentH.birthYear" name="parentHBirthYear" type="text" placeholder="aaaa" class="col-span-2 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentH.birthPlace" name="parentHBirthPlace" type="text" [placeholder]="translate.t('place')" class="col-span-6 border border-gray-300 rounded px-3 py-2">
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('death') }}</label>
+          <input [(ngModel)]="parentH.deathDay" name="parentHDeathDay" type="text" placeholder="jj" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentH.deathMonth" name="parentHDeathMonth" type="text" placeholder="mm" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentH.deathYear" name="parentHDeathYear" type="text" placeholder="aaaa" class="col-span-2 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentH.deathPlace" name="parentHDeathPlace" type="text" [placeholder]="translate.t('place')" class="col-span-6 border border-gray-300 rounded px-3 py-2">
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mb-6">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('profession') }}</label>
+          <input [(ngModel)]="parentH.profession" name="parentHProfession" type="text" [placeholder]="translate.t('profession')" class="col-span-10 border border-gray-300 rounded px-3 py-2">
+        </div>
+
+        <!-- Parent F (Femme) -->
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('first_name_f') }}</label>
+          <input [(ngModel)]="parentF.firstName" name="parentFFirstName" type="text" [placeholder]="translate.t('first_name_f')" class="col-span-7 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentF.number" name="parentFNumber" type="text" class="col-span-3 border border-gray-300 rounded px-3 py-2">
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('surname') }}</label>
+          <input [(ngModel)]="parentF.lastName" name="parentFLastName" type="text" [placeholder]="translate.t('surname')" class="col-span-7 border border-gray-300 rounded px-3 py-2">
+          <select class="col-span-3 border border-gray-300 rounded px-3 py-2">
+            <option>{{ translate.t('create') }}</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('birth') }}</label>
+          <input [(ngModel)]="parentF.birthDay" name="parentFBirthDay" type="text" placeholder="jj" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentF.birthMonth" name="parentFBirthMonth" type="text" placeholder="mm" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentF.birthYear" name="parentFBirthYear" type="text" placeholder="aaaa" class="col-span-2 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentF.birthPlace" name="parentFBirthPlace" type="text" [placeholder]="translate.t('place')" class="col-span-6 border border-gray-300 rounded px-3 py-2">
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('death') }}</label>
+          <input [(ngModel)]="parentF.deathDay" name="parentFDeathDay" type="text" placeholder="jj" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentF.deathMonth" name="parentFDeathMonth" type="text" placeholder="mm" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentF.deathYear" name="parentFDeathYear" type="text" placeholder="aaaa" class="col-span-2 border border-gray-300 rounded px-3 py-2">
+          <input [(ngModel)]="parentF.deathPlace" name="parentFDeathPlace" type="text" [placeholder]="translate.t('place')" class="col-span-6 border border-gray-300 rounded px-3 py-2">
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mb-6">
+          <label class="col-span-2 text-right pt-2 font-medium">{{ translate.t('profession') }}</label>
+          <input [(ngModel)]="parentF.profession" name="parentFProfession" type="text" [placeholder]="translate.t('profession')" class="col-span-10 border border-gray-300 rounded px-3 py-2">
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mb-6">
+          <div class="col-span-2"></div>
+          <div class="col-span-10">
+            <label class="flex items-center gap-2">
+              <input [(ngModel)]="homosexualRelation" name="homosexualRelation" type="checkbox" class="w-4 h-4">
+              <span>{{ translate.t('homosexual_relation') }}</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <button type="button" (click)="saveParents()" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 flex items-center gap-2">
+            OK 🔄
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION ÉVÉNEMENTS -->
+      <div id="events-section" class="mb-8 border-t pt-8">
+        <h2 class="text-2xl font-semibold text-center bg-gray-100 py-3 mb-6 rounded">{{ translate.t('events') }}</h2>
+
+        <div *ngFor="let event of events; let i = index" class="mb-8">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="font-semibold text-sm">{{ translate.t('events').toUpperCase() }} {{ i + 1 }}</h3>
+            <button type="button" (click)="removeEvent(i)" class="text-red-600 hover:text-red-800 text-sm">✕ {{ translate.t('remove_event') }}</button>
+          </div>
+
+          <div class="grid grid-cols-12 gap-3 mb-3">
+            <div class="col-span-2"></div>
+            <select [(ngModel)]="event.type" [name]="'eventType' + i" class="col-span-10 border border-gray-300 rounded px-3 py-1.5 text-sm">
+              <option value="">{{ translate.t('choose_event') }}</option>
+              <option value="marriage">{{ translate.t('marriage') }}</option>
+              <option value="not_married">{{ translate.t('not_married') }}</option>
+              <option value="engagement">{{ translate.t('engagement') }}</option>
+              <option value="no_mention">{{ translate.t('no_mention') }}</option>
+              <option value="marriage_bann">{{ translate.t('marriage_bann') }}</option>
+              <option value="marriage_contract">{{ translate.t('marriage_contract') }}</option>
+              <option value="marriage_license">{{ translate.t('marriage_license') }}</option>
+              <option value="pacs">{{ translate.t('pacs') }}</option>
+              <option value="divorce">{{ translate.t('divorce') }}</option>
+              <option value="separated">{{ translate.t('separated') }}</option>
+              <option value="annulation">{{ translate.t('annulation') }}</option>
+              <option value="residence">{{ translate.t('residence') }}</option>
+              <option value="custom">{{ translate.t('custom_event') }}</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-12 gap-3 mb-3">
+            <label class="col-span-2 text-right text-sm pt-1">{{ translate.t('place') }}</label>
+            <input [(ngModel)]="event.place" [name]="'eventPlace' + i" type="text" [placeholder]="translate.t('place')" class="col-span-10 border border-gray-300 rounded px-3 py-1.5 text-sm">
+          </div>
+
+          <div class="grid grid-cols-12 gap-3 mb-3">
+            <label class="col-span-2 text-right text-sm pt-1">{{ translate.t('date') }}</label>
+            <input [(ngModel)]="event.day" [name]="'eventDay' + i" type="text" placeholder="" class="col-span-1 border border-gray-300 rounded px-2 py-1.5 text-sm text-center">
+            <span class="text-sm pt-1">{{ translate.t('day') }}</span>
+            <input [(ngModel)]="event.month" [name]="'eventMonth' + i" type="text" placeholder="" class="col-span-1 border border-gray-300 rounded px-2 py-1.5 text-sm text-center">
+            <span class="text-sm pt-1">{{ translate.t('month') }}</span>
+            <input [(ngModel)]="event.year" [name]="'eventYear' + i" type="text" placeholder="" class="col-span-1 border border-gray-300 rounded px-2 py-1.5 text-sm text-center">
+            <span class="text-sm pt-1">{{ translate.t('year') }}</span>
+            <select [(ngModel)]="event.exactDate" [name]="'eventExactDate' + i" class="col-span-2 border border-gray-300 rounded px-2 py-1.5 text-sm">
+              <option value="exact">exact</option>
+              <option value="about">environ</option>
+              <option value="before">avant</option>
+              <option value="after">après</option>
+            </select>
+            <select [(ngModel)]="event.dateType" [name]="'eventDateType' + i" class="col-span-1 border border-gray-300 rounded px-2 py-1.5 text-sm">
+              <option value="-">-</option>
+              <option value="range">Plage</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-12 gap-3 mb-3">
+            <div class="col-span-2"></div>
+            <input [(ngModel)]="event.secondDay" [name]="'eventSecondDay' + i" type="text" placeholder="" class="col-span-1 border border-gray-300 rounded px-2 py-1.5 text-sm text-center">
+            <span class="text-sm pt-1">{{ translate.t('day') }}</span>
+            <input [(ngModel)]="event.secondMonth" [name]="'eventSecondMonth' + i" type="text" placeholder="" class="col-span-1 border border-gray-300 rounded px-2 py-1.5 text-sm text-center">
+            <span class="text-sm pt-1">{{ translate.t('month') }}</span>
+            <input [(ngModel)]="event.secondYear" [name]="'eventSecondYear' + i" type="text" placeholder="" class="col-span-1 border border-gray-300 rounded px-2 py-1.5 text-sm text-center">
+            <span class="text-sm pt-1">{{ translate.t('year') }}</span>
+            <input [(ngModel)]="event.textDate" [name]="'eventTextDate' + i" type="text" placeholder="...ou texte" class="col-span-3 border border-gray-300 rounded px-3 py-1.5 text-sm">
+          </div>
+
+          <div class="grid grid-cols-12 gap-3 mb-3">
+            <label class="col-span-2 text-right text-sm pt-1">{{ translate.t('notes') }}</label>
+            <textarea [(ngModel)]="event.notes" [name]="'eventNotesText' + i" [placeholder]="translate.t('notes')" class="col-span-10 border border-gray-300 rounded px-3 py-1.5 text-sm" rows="2"></textarea>
+          </div>
+
+          <div class="grid grid-cols-12 gap-3 mb-4">
+            <label class="col-span-2 text-right text-sm pt-1">{{ translate.t('source') }}</label>
+            <input [(ngModel)]="event.source" [name]="'eventSource' + i" type="text" [placeholder]="translate.t('source')" class="col-span-10 border border-gray-300 rounded px-3 py-1.5 text-sm">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-3 mb-3">
+          <label class="col-span-2 text-right text-sm pt-1">{{ translate.t('insert') }}</label>
+          <div class="col-span-10 flex gap-2 items-center">
+            <select #eventCount class="border border-gray-300 rounded px-2 py-1 text-sm">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+            </select>
+            <span class="text-sm text-blue-600 cursor-pointer hover:underline">{{ translate.t('witness') }}</span>
+            <input type="checkbox" class="w-4 h-4">
+            <button type="button" (click)="addEvent(+eventCount.value, true)" class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 text-sm">OK</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-3">
+          <label class="col-span-2 text-right text-sm pt-1">{{ translate.t('insert') }}</label>
+          <div class="col-span-10 flex gap-2 items-center">
+            <select #eventCount2 class="border border-gray-300 rounded px-2 py-1 text-sm">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+            </select>
+            <span class="text-sm text-blue-600 cursor-pointer hover:underline">{{ translate.t('event') }}</span>
+            <input type="checkbox" class="w-4 h-4">
+            <button type="button" (click)="addEvent(+eventCount2.value, false)" class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 text-sm">OK</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION ENFANTS -->
+      <div id="children-section" class="mb-8 border-t pt-8">
+        <h2 class="text-2xl font-semibold text-center bg-gray-100 py-3 mb-6 rounded">{{ translate.t('children') }}</h2>
+
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2">{{ translate.t('insert') }}</label>
+          <div class="col-span-10 flex gap-2">
+            <select #childCount class="border border-gray-300 rounded px-3 py-2">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+            </select>
+            <span class="pt-2 text-blue-600">{{ translate.t('child') }}</span>
+            <input type="checkbox" class="mt-2">
+            <button type="button" (click)="addChild(+childCount.value)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">OK</button>
+          </div>
+        </div>
+
+        <div *ngFor="let child of children; let i = index" class="mb-6 p-4 bg-gray-50 rounded">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-semibold">{{ i + 1 }}<sup>er</sup> ENFANT</h3>
+            <button type="button" (click)="removeChild(i)" class="text-red-600 hover:text-red-800">✕</button>
+          </div>
+
+          <div class="grid grid-cols-12 gap-4 mb-4">
+            <div class="col-span-2"></div>
+            <select [(ngModel)]="child.action" [name]="'childAction' + i" class="col-span-10 border border-gray-300 rounded px-3 py-2">
+              <option value="create">{{ translate.t('create') }}</option>
+              <option value="link">Lier</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-12 gap-4 mb-4">
+            <label class="col-span-2 text-right pt-2">{{ translate.t('first_name_m') }}</label>
+            <input [(ngModel)]="child.firstName" [name]="'childFirstName' + i" type="text" [placeholder]="translate.t('first_name_m')" class="col-span-5 border border-gray-300 rounded px-3 py-2">
+            <label class="col-span-1 text-right pt-2">{{ translate.t('number') }}</label>
+            <input [(ngModel)]="child.number" [name]="'childNumber' + i" type="text" value="0" class="col-span-4 border border-gray-300 rounded px-3 py-2">
+          </div>
+
+          <div class="grid grid-cols-12 gap-4 mb-4">
+            <label class="col-span-2 text-right pt-2">{{ translate.t('surname') }}</label>
+            <input [(ngModel)]="child.lastName" [name]="'childLastName' + i" type="text" [placeholder]="translate.t('surname')" class="col-span-5 border border-gray-300 rounded px-3 py-2">
+            <label class="col-span-1 text-right pt-2">{{ translate.t('sex') }}</label>
+            <div class="col-span-4 flex gap-3 pt-2">
+              <label><input [(ngModel)]="child.sex" [name]="'childSex' + i" type="radio" value="H"> H</label>
+              <label><input [(ngModel)]="child.sex" [name]="'childSex' + i" type="radio" value="?" checked> ?</label>
+              <label><input [(ngModel)]="child.sex" [name]="'childSex' + i" type="radio" value="F"> F</label>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 gap-4 mb-4">
+            <label class="col-span-2 text-right pt-2">{{ translate.t('birth') }}</label>
+            <input [(ngModel)]="child.birthDay" [name]="'childBirthDay' + i" type="text" placeholder="jj" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+            <input [(ngModel)]="child.birthMonth" [name]="'childBirthMonth' + i" type="text" placeholder="mm" class="col-span-2 border border-gray-300 rounded px-3 py-2">
+            <input [(ngModel)]="child.birthYear" [name]="'childBirthYear' + i" type="text" placeholder="aaaa" class="col-span-2 border border-gray-300 rounded px-3 py-2">
+            <input [(ngModel)]="child.birthPlace" [name]="'childBirthPlace' + i" type="text" [placeholder]="translate.t('place')" class="col-span-5 border border-gray-300 rounded px-3 py-2">
+          </div>
+
+          <div class="grid grid-cols-12 gap-4 mb-4">
+            <label class="col-span-2 text-right pt-2">{{ translate.t('death') }}</label>
+            <input [(ngModel)]="child.deathDay" [name]="'childDeathDay' + i" type="text" placeholder="jj" class="col-span-1 border border-gray-300 rounded px-3 py-2">
+            <input [(ngModel)]="child.deathMonth" [name]="'childDeathMonth' + i" type="text" placeholder="mm" class="col-span-2 border border-gray-300 rounded px-3 py-2">
+            <input [(ngModel)]="child.deathYear" [name]="'childDeathYear' + i" type="text" placeholder="aaaa" class="col-span-2 border border-gray-300 rounded px-3 py-2">
+            <input [(ngModel)]="child.deathPlace" [name]="'childDeathPlace' + i" type="text" [placeholder]="translate.t('place')" class="col-span-5 border border-gray-300 rounded px-3 py-2">
+          </div>
+
+          <div class="grid grid-cols-12 gap-4">
+            <label class="col-span-2 text-right pt-2">{{ translate.t('profession') }}</label>
+            <input [(ngModel)]="child.profession" [name]="'childProfession' + i" type="text" [placeholder]="translate.t('profession')" class="col-span-10 border border-gray-300 rounded px-3 py-2">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 mt-6">
+          <label class="col-span-2 text-right pt-2">{{ translate.t('insert') }}</label>
+          <div class="col-span-10 flex gap-2">
+            <select #childCount2 class="border border-gray-300 rounded px-3 py-2">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+            </select>
+            <span class="pt-2 text-blue-600">{{ translate.t('child') }}</span>
+            <input type="checkbox" class="mt-2">
+            <button type="button" (click)="addChild(+childCount2.value)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">OK</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION SOURCES -->
+      <div id="sources-section" class="mb-8 border-t pt-8">
+        <h2 class="text-2xl font-semibold text-center bg-gray-100 py-3 mb-6 rounded">{{ translate.t('sources') }}</h2>
+
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <label class="col-span-2 text-right pt-2">{{ translate.t('person_sources') }}</label>
+          <input [(ngModel)]="personSources" name="personSources" type="text" [placeholder]="'Sources ' + translate.t('person_sources').toLowerCase()" class="col-span-10 border border-gray-300 rounded px-3 py-2">
+        </div>
+
+        <div class="grid grid-cols-12 gap-4">
+          <label class="col-span-2 text-right pt-2">{{ translate.t('family_sources') }}</label>
+          <input [(ngModel)]="familySources" name="familySources" type="text" [placeholder]="'Sources ' + translate.t('family_sources').toLowerCase()" class="col-span-9 border border-gray-300 rounded px-3 py-2">
+          <input type="checkbox" class="col-span-1 mt-2">
+        </div>
+      </div>
+
+      <!-- SECTION COMMENTAIRE -->
+      <div id="comments-section" class="mb-8 border-t pt-8">
+        <h2 class="text-2xl font-semibold text-center bg-gray-100 py-3 mb-6 rounded">{{ translate.t('comment') }}</h2>
+
+        <div class="mb-4">
+          <div class="flex gap-2 mb-2 text-sm relative">
+            <!-- HTML Menu -->
+            <div class="relative">
+              <button type="button" (click)="toggleMenu('html')" class="border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 flex items-center gap-1">
+                <span>&lt;HTML&gt;</span>
+                <span class="text-xs">▼</span>
+              </button>
+              <div *ngIf="showHtmlMenu" class="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-[300px]">
+                <button type="button" *ngFor="let template of htmlTemplates" (click)="insertTemplate(template.value)" class="block w-full text-left px-3 py-2 hover:bg-blue-50 text-xs border-b border-gray-200">
+                  {{ template.label }}
+                </button>
+              </div>
+            </div>
+
+            <!-- H1/H2/H3/H4/H5/H6 Menu -->
+            <div class="relative">
+              <button type="button" (click)="toggleMenu('h1')" class="border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 flex items-center gap-1">
+                <span>h1</span>
+                <span class="text-xs">▼</span>
+              </button>
+              <div *ngIf="showH1Menu" class="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-[150px]">
+                <button type="button" *ngFor="let template of h1Templates" (click)="insertTemplate(template.value)" class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm">
+                  {{ template.label }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Format Menu -->
+            <div class="relative">
+              <button type="button" (click)="toggleMenu('format')" class="border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 flex items-center gap-1">
+                <span>Format</span>
+                <span class="text-xs">▼</span>
+              </button>
+              <div *ngIf="showFormatMenu" class="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-[150px]">
+                <button type="button" *ngFor="let template of formatTemplates" (click)="insertTemplate(template.value)" class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm">
+                  {{ template.label }}
+                </button>
+              </div>
+            </div>
+
+            <!-- List Menu -->
+            <div class="relative">
+              <button type="button" (click)="toggleMenu('list')" class="border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 flex items-center gap-1">
+                <span>ul ol dl pre</span>
+                <span class="text-xs">▼</span>
+              </button>
+              <div *ngIf="showListMenu" class="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-[150px]">
+                <button type="button" *ngFor="let template of listTemplates" (click)="insertTemplate(template.value)" class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm">
+                  {{ template.label }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Notes diverses Menu -->
+            <div class="relative">
+              <button type="button" (click)="toggleMenu('notes')" class="border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 flex items-center gap-1">
+                <span>Notes diverses</span>
+                <span class="text-xs">▼</span>
+              </button>
+              <div *ngIf="showNotesMenu" class="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-[200px]">
+                <button type="button" *ngFor="let template of notesTemplates" (click)="insertTemplate(template.value)" class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm">
+                  {{ template.label }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Sommaire Menu -->
+            <div class="relative">
+              <button type="button" (click)="toggleMenu('sommaire')" class="border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 flex items-center gap-1">
+                <span>Sommaire</span>
+                <span class="text-xs">▼</span>
+              </button>
+              <div *ngIf="showSommaireMenu" class="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-[150px]">
+                <button type="button" *ngFor="let template of sommaireTemplates" (click)="insertTemplate(template.value)" class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm">
+                  {{ template.label }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Personne Menu -->
+            <div class="relative">
+              <button type="button" (click)="toggleMenu('personne')" class="border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 flex items-center gap-1">
+                <span>Personne</span>
+                <span class="text-xs">▼</span>
+              </button>
+              <div *ngIf="showPersonneMenu" class="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-[300px]">
+                <button type="button" *ngFor="let template of personneTemplates" (click)="insertTemplate(template.value)" class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm">
+                  {{ template.label }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <textarea #commentTextarea [(ngModel)]="comment" name="comment" class="flex-1 border border-gray-300 rounded px-3 py-2 min-h-[200px]" placeholder="Commentaire..."></textarea>
+            
+            <div class="w-48 border border-gray-300 rounded p-2 bg-white overflow-y-auto max-h-[200px]">
+              <div class="grid grid-cols-8 gap-1 text-xs text-blue-600">
+                <button type="button" *ngFor="let char of specialChars" (click)="insertChar(char)" class="cursor-pointer hover:bg-blue-100 p-1 text-center rounded">{{ char }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <button type="submit" class="bg-blue-500 text-white px-8 py-3 rounded hover:bg-blue-600 text-lg font-semibold">
+            {{ translate.t('validate') }} 🔄
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="w-full mt-8 pt-8 border-t flex items-center justify-between text-sm text-gray-600">
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/EpitechPGE45-2025/G-ING-900-PAR-9-1-legacy-22" target="_blank" class="text-blue-600 cursor-pointer hover:underline">🌐 {{ translate.t('geneweb_version') }}</a>
+        <span>©</span>
+        <a href="https://inria.fr" target="_blank" class="text-blue-600 hover:underline">INRIA</a>
+        <span>{{ translate.t('copyright') }}</span>
+        <a href="https://geneweb.tuxfamily.org/wiki/GeneWeb/fr" target="_blank" class="text-blue-600 hover:underline">W</a>
+        <a href="https://github.com/geneweb/geneweb" target="_blank" class="text-blue-600 hover:underline">
+          <svg class="inline-block w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+      </div>
+      
+      <div class="flex items-center gap-2 relative language-dropdown">
+        <button 
+          (click)="toggleLanguageDropdown()"
+          class="text-blue-600 hover:underline flex items-center gap-1 cursor-pointer">
+          {{ currentLanguage }}
+          <span>▼</span>
+        </button>
+        
+        <!-- Dropdown menu -->
+        <div 
+          *ngIf="showLanguageDropdown"
+          class="absolute bottom-full right-0 mb-2 bg-white border border-gray-300 rounded shadow-lg py-2 z-10 min-w-[150px]">
+          <button
+            *ngFor="let lang of languages"
+            (click)="changeLanguage(lang.code)"
+            [class.bg-blue-100]="lang.code.toUpperCase() === currentLanguage"
+            [class.font-bold]="lang.code.toUpperCase() === currentLanguage"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-800 text-sm">
+            {{ lang.label }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

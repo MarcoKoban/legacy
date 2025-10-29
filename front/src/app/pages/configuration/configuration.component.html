@@ -1,0 +1,158 @@
+<div class="min-h-screen bg-gray-50 py-6 px-4">
+  <!-- Navigation icons on the left -->
+  <div class="fixed left-4 top-20 flex flex-col gap-3 z-50">
+    <button 
+      (click)="goHome()"
+      class="w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+      title="Retour à l'accueil">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    </button>
+    
+    <button 
+      (click)="goBack()"
+      class="w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+      title="Page précédente">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+    </button>
+
+    <button 
+      class="w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+      title="Recherche">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </button>
+
+    <button 
+      class="w-12 h-12 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+      title="Fermer">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
+
+    <!-- Titre -->
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+      {{ translate.t('geneweb_parameters') }}
+      <span class="wizard-icon" title="{{ translate.t('wizard') }}">🧙</span>
+    </h1>
+
+    <!-- Section: Informations de compilation -->
+    <section id="build-info" class="mb-8">
+      <h2>{{ translate.t('build_information') }}</h2>
+      <div>
+        <strong>{{ translate.t('geneweb_version') }}:</strong> {{ genewebVersion }}<br>
+        {{ translate.t('branch_compiled')
+          .replace('%s', branchName)
+          .replace('%s', compilationDate)
+          .replace('%s', commitId) }}
+      </div>
+    </section>
+
+    <!-- Section: Variables utilisateur et langue -->
+    <section id="user-info" class="mb-8">
+      <h2>{{ translate.t('user_and_language_variables') }}</h2>
+      <div>
+        <strong>{{ translate.t('user') }}:</strong> {{ userIdent }}<br>
+        <strong>{{ translate.t('username') }}:</strong> {{ userName || '-' }}<br>
+        <strong>{{ translate.t('userkey') }}:</strong> {{ userKey || '-' }}<br>
+        <strong>{{ translate.t('lang') }}:</strong> {{ langFull }}<br>
+        <strong>{{ translate.t('lang_fallback') }}:</strong> {{ langFallback }}<br>
+        <strong>{{ translate.t('default_lang') }}:</strong> {{ defaultLang }}<br>
+        <strong>{{ translate.t('browser_lang') }}:</strong> {{ browserLang }}<br>
+      </div>
+    </section>
+
+    <!-- Section: Arguments de lancement du serveur Gwd -->
+    <section id="gwd-arguments" class="mb-8">
+      <h2>{{ translate.t('launch_arguments_of_gwd_server') }}</h2>
+      <div class="mb-3">
+        <code class="bg-gray-100 px-2 py-1 rounded">geneweb_python/{{ gwdArglist }}</code>
+      </div>
+      <div>
+        <strong>{{ translate.t('mode') }}:</strong> {{ isCGI ? translate.t('cgi') : translate.t('server') }}<br>
+        <strong>{{ translate.t('prefix') }}:</strong> {{ prefix }}<br>
+        <strong>{{ translate.t('etc_prefix') }}:</strong> {{ etcPrefix || '-' }}<br>
+        <strong>{{ translate.t('images_prefix') }}:</strong> {{ imagesPrefix }}<br>
+      </div>
+    </section>
+
+    <!-- Section: Paramètres de configuration -->
+    <section id="bvar-list" class="mb-8">
+      <h2>{{ translate.t('configuration_parameters') }}</h2>
+      <div>
+        <strong>{{ translate.t('mode') }}:</strong> <strong>{{ isReorg ? 'Reorg' : 'Classic' }}</strong>: 
+        <code class="config-file">{{ configFile || 'base.gwf' }}</code><br>
+        
+        <div class="mt-3">
+          <div class="bvar-item">access_by_key={{ configParams.access_by_key }}</div>
+          <div class="bvar-item">disable_forum={{ configParams.disable_forum }}</div>
+          <div class="bvar-item">hide_private_names={{ configParams.hide_private_names }}</div>
+          <div class="bvar-item">use_restrict={{ configParams.use_restrict }}</div>
+          <div class="bvar-item">show_consang={{ configParams.show_consang }}</div>
+          <div class="bvar-item">display_sosa={{ configParams.display_sosa }}</div>
+          <div class="bvar-item">place_surname_link_to_ind={{ configParams.place_surname_link_to_ind }}</div>
+          <div class="bvar-item">max_anc_level={{ configParams.max_anc_level }}</div>
+          <div class="bvar-item">max_anc_tree={{ configParams.max_anc_tree }}</div>
+          <div class="bvar-item">max_desc_level={{ configParams.max_desc_level }}</div>
+          <div class="bvar-item">max_desc_tree={{ configParams.max_desc_tree }}</div>
+          <div class="bvar-item">max_cousins={{ configParams.max_cousins }}</div>
+          <div class="bvar-item">max_cousins_level={{ configParams.max_cousins_level }}</div>
+          <div class="bvar-item">latest_event={{ configParams.latest_event }}</div>
+          <div class="bvar-item">template={{ configParams.template }}</div>
+          <div class="bvar-item">long_date={{ configParams.long_date }}</div>
+          <div class="bvar-item">counter={{ configParams.counter }}</div>
+          <div class="bvar-item">full_siblings={{ configParams.full_siblings }}</div>
+          <div class="bvar-item">hide_advanced_request={{ configParams.hide_advanced_request }}</div>
+          <div class="bvar-item">p_mod={{ configParams.p_mod || '' }}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="w-full mt-8 pt-8 border-t flex items-center justify-between text-sm text-gray-600">
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/EpitechPGE45-2025/G-ING-900-PAR-9-1-legacy-22" target="_blank" class="text-blue-600 cursor-pointer hover:underline">🌐 {{ translate.t('geneweb_version_number') }}</a>
+        <span>©</span>
+        <a href="https://inria.fr" target="_blank" class="text-blue-600 hover:underline">INRIA</a>
+        <span>{{ translate.t('copyright') }}</span>
+        <a href="https://geneweb.tuxfamily.org/wiki/GeneWeb/fr" target="_blank" class="text-blue-600 hover:underline">W</a>
+        <a href="https://github.com/geneweb/geneweb" target="_blank" class="text-blue-600 hover:underline">
+          <svg class="inline-block w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+      </div>
+      
+      <div class="flex items-center gap-2 relative language-dropdown">
+        <button 
+          (click)="toggleLanguageDropdown()"
+          class="text-blue-600 hover:underline flex items-center gap-1 cursor-pointer">
+          {{ currentLanguage }}
+          <span>▼</span>
+        </button>
+        
+        <!-- Dropdown menu -->
+        <div 
+          *ngIf="showLanguageDropdown"
+          class="absolute bottom-full right-0 mb-2 bg-white border border-gray-300 rounded shadow-lg py-2 z-10 min-w-[150px]">
+          <button
+            *ngFor="let lang of languages"
+            (click)="changeLanguage(lang.code)"
+            [class.bg-blue-100]="lang.code.toUpperCase() === currentLanguage"
+            [class.font-bold]="lang.code.toUpperCase() === currentLanguage"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-800 text-sm">
+            {{ lang.label }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

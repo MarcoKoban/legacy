@@ -1,0 +1,118 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geneweb-python"
+version = "0.1.0"
+description = "Python implementation of Geneweb genealogy software"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "dataclasses-json>=0.6.0",
+    "typing-extensions>=4.7.0",
+    "python-dateutil>=2.8.0",
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "slowapi>=0.1.9",
+    "python-multipart>=0.0.6",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "cryptography>=41.0.0",
+    "prometheus-client>=0.19.0",
+    "structlog>=23.2.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.25.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-xdist>=3.0.0",
+    "pytest-mock>=3.10.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-html>=4.0.0",
+    "selenium>=4.15.0",
+    "requests>=2.31.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "pre-commit>=3.0.0",
+    "tox>=4.0.0",
+    "pytest-benchmark>=4.0.0",
+    "faker>=19.0.0",
+    "hypothesis>=6.82.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py39", "py310", "py311", "py312", "py313"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+
+[tool.mypy]
+python_version = "3.9"
+strict = false
+warn_return_any = false
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = false
+disallow_untyped_decorators = false
+explicit_package_bases = true
+mypy_path = "src"
+ignore_missing_imports = true
+allow_redefinition = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-config",
+    "--verbose",
+    "--tb=short",
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml",
+    "--cov-fail-under=0"
+]
+markers = [
+    "unit: Unit tests for individual functions and classes",
+    "integration: Integration tests for multiple components",
+    "e2e: End-to-end tests simulating complete user workflows",
+    "slow: Slow running tests that take more than 1 second",
+    "tdd: Test-Driven Development cycle tests"
+]
+filterwarnings = [
+    "ignore::pytest.PytestUnknownMarkWarning",
+    "ignore:'crypt' is deprecated and slated for removal in Python 3.13:DeprecationWarning:passlib.utils"
+]

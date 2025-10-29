@@ -1,0 +1,163 @@
+name: 🐍 Python TDD Tests
+
+on:
+  push:
+    branches: [ main, dev, develop, "**" ]
+    paths:
+      - 'geneweb_python/**'
+      - '.github/workflows/python-tests.yml'
+  pull_request:
+    branches: [ main, dev, develop ]
+    paths:
+      - 'geneweb_python/**'
+      - '.github/workflows/python-tests.yml'
+
+jobs:
+  test:
+    name: 🧪 Test Python ${{ matrix.python-version }}
+    runs-on: [self-hosted]
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    defaults:
+      run:
+        working-directory: ./geneweb_python
+
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+
+    - name: 🔍 Lint with flake8
+      run: |
+        # Stop the build if there are Python syntax errors or undefined names
+        flake8 src tests --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 src tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: 🎨 Check code formatting with black
+      run: |
+        black --check src tests
+
+    - name: 📋 Check import sorting with isort
+      run: |
+        isort --check-only src tests
+
+    - name: 🔎 Type checking with mypy
+      run: |
+        mypy src
+      continue-on-error: true  # Allow mypy to fail during early development
+
+    - name: 🧪 Run tests with pytest
+      run: |
+        pytest --cov=src --cov-report=xml --cov-report=term-missing
+
+    - name: 📊 Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./geneweb_python/coverage.xml
+        flags: python
+        name: python-${{ matrix.python-version }}
+        fail_ci_if_error: false
+
+  tdd-validation:
+    name: 🔄 TDD Workflow Validation
+    runs-on: [self-hosted]
+    defaults:
+      run:
+        working-directory: ./geneweb_python
+
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+        cache: 'pip'
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+
+    - name: 🔴 TDD Red Phase - Verify test discovery
+      run: |
+        echo "🔴 RED: Verifying test discovery works"
+        pytest --collect-only -q
+
+    - name: 🟢 TDD Green Phase - Run all tests
+      run: |
+        echo "🟢 GREEN: Running all tests"
+        pytest -v
+
+    - name: 🔵 TDD Refactor Phase - Code quality checks
+      run: |
+        echo "🔵 REFACTOR: Running code quality checks"
+        make quality || echo "Quality checks completed with warnings"
+
+    - name: 📊 Generate coverage report
+      run: |
+        echo "📊 Generating coverage report"
+        pytest --cov=src --cov-report=html --cov-report=term
+
+    - name: 📦 Archive coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report-${{ github.sha }}
+        path: geneweb_python/htmlcov/
+        retention-days: 30
+
+  deployment-readiness:
+    name: 🚀 Deployment Readiness Check
+    runs-on: [self-hosted]
+    needs: [test, tdd-validation]
+    if: github.ref == 'refs/heads/main'
+    defaults:
+      run:
+        working-directory: ./geneweb_python
+
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+
+    - name: 🏗️ Test package build
+      run: |
+        python -m build
+
+    - name: ✅ Validate test coverage target
+      run: |
+        echo "🎯 Validating test coverage meets target (currently 0%, target will be 90%)"
+        echo "Current implementation has $(pytest --collect-only -q | grep -c '::') tests"
+        echo "Target: 50 tests (matching OCaml implementation)"
+
+    - name: 📋 Display project status
+      run: |
+        echo "📊 Project Status:"
+        echo "Tests: $(pytest --collect-only -q 2>/dev/null | grep -c '::' || echo '0')"
+        echo "Coverage: TBD (will be 90%+ when implementation complete)"
+        echo "Quality: $(pre-commit run --all-files > /dev/null 2>&1 && echo 'PASS' || echo 'NEEDS_WORK')"
+        echo "Ready for production: $([ -f 'src/geneweb/sosa.py' ] && echo 'PARTIAL' || echo 'IN_DEVELOPMENT')"

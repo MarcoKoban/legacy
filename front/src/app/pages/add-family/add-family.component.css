@@ -1,0 +1,47 @@
+/* Styles pour Add Family */
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  font-size: 14px;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navigation buttons */
+button[type="button"]:not(.bg-blue-500):not(.bg-red-600) {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Radio buttons */
+input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Checkboxes */
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+sup {
+  font-size: 0.7em;
+  vertical-align: super;
+}

@@ -1,0 +1,83 @@
+{
+  "fr": {
+    "title": "Traces de la dernière commande",
+    "commLogContent": "Voici le contenu du fichier \"comm.log\"",
+    "gwsetupLogContent": "Et le contenu de gwsetup.log",
+    "welcome": "Ou revenez au menu principal.",
+    "no_commLog": "fichier vide",
+    "no_gwsetupLog": "pas de traces",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "en": {
+    "title": "Last command traces",
+    "commLogContent": "Here is the content of the \"comm.log\" file",
+    "gwsetupLogContent": "And the content of gwsetup.log",
+    "welcome": "Or return to the main menu.",
+    "no_commLog": "empty file",
+    "no_gwsetupLog": "no traces",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "co": {
+    "title": "Tracce di l'ultima cumanda",
+    "commLogContent": "Eccu u cuntenutu di u schedariu \"comm.log\"",
+    "gwsetupLogContent": "È u cuntenutu di gwsetup.log",
+    "welcome": "O vultate à u menù principale.",
+    "no_commLog": "schedariu viotu",
+    "no_gwsetupLog": "nimu traccia",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "de": {
+    "title": "Spuren des letzten Befehls",
+    "commLogContent": "Hier ist der Inhalt der Datei \"comm.log\"",
+    "gwsetupLogContent": "Und der Inhalt von gwsetup.log",
+    "welcome": "Oder kehren Sie zum Hauptmenü zurück.",
+    "no_commLog": "leere Datei",
+    "no_gwsetupLog": "keine Spuren",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "es": {
+    "title": "Trazas del último comando",
+    "commLogContent": "Aquí está el contenido del archivo \"comm.log\"",
+    "gwsetupLogContent": "Y el contenido de gwsetup.log",
+    "welcome": "O vuelva al menú principal.",
+    "no_commLog": "archivo vacío",
+    "no_gwsetupLog": "sin trazas",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "it": {
+    "title": "Tracce dell'ultimo comando",
+    "commLogContent": "Ecco il contenuto del file \"comm.log\"",
+    "gwsetupLogContent": "E il contenuto di gwsetup.log",
+    "welcome": "Oppure torna al menu principale.",
+    "no_commLog": "file vuoto",
+    "no_gwsetupLog": "nessuna traccia",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "lv": {
+    "title": "Pēdējās komandas pēdas",
+    "commLogContent": "Šeit ir \"comm.log\" faila saturs",
+    "gwsetupLogContent": "Un gwsetup.log saturs",
+    "welcome": "Vai atgriezieties galvenajā izvēlnē.",
+    "no_commLog": "tukšs fails",
+    "no_gwsetupLog": "nav pēdu",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "sv": {
+    "title": "Spår av senaste kommandot",
+    "commLogContent": "Här är innehållet i filen \"comm.log\"",
+    "gwsetupLogContent": "Och innehållet i gwsetup.log",
+    "welcome": "Eller gå tillbaka till huvudmenyn.",
+    "no_commLog": "tom fil",
+    "no_gwsetupLog": "inga spår",
+    "footer": "Version 7.1-beta Copyright © 1998-2021"
+  },
+  "fi": {
+    "title": "Viimeisimmän komennon jäljet",
+    "commLogContent": "Tässä on \"comm.log\"-tiedoston sisältö",
+    "gwsetupLogContent": "Ja gwsetup.log-tiedoston sisältö",
+    "welcome": "Tai palaa päävalikkoon.",
+    "no_commLog": "tyhjä tiedosto",
+    "no_gwsetupLog": "ei jälkiä",
+    "footer": "Versio 7.1-beta Copyright © 1998-2021"
+  }
+}

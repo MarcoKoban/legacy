@@ -1,0 +1,43 @@
+/* Styles pour la page Database */
+
+button {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Personnalisation des couleurs pour correspondre à GeneWeb */
+.bg-green-600 {
+  background-color: #2f6400;
+}
+
+.bg-green-600:hover {
+  background-color: #254f00;
+}
+
+/* Styles pour le dropdown de langues */
+.relative {
+  position: relative;
+}
+
+/* Animation pour le dropdown */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+div[class*="absolute"] {
+  animation: slideDown 0.2s ease-out;
+}

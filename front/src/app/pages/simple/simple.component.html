@@ -1,0 +1,33 @@
+<div class="bg-no-repeat bg-left-top flex items-center h-24" style="background-image: url('assets/gwlogo.png');">
+  <h1 class="w-full text-center text-4xl font-bold text-green-700 m-0 leading-[95px] ml-0">{{ translate.t('title') }}</h1>
+</div>
+
+<form (submit)="onSubmit($event)" class="max-w-xl mt-8 ml-0">
+  <ul class="list-disc ml-6">
+    <li class="mb-4">
+      {{ translate.t('firstLine') }}
+      <div class="mt-2">
+        <input [(ngModel)]="dbName" name="o" type="text" size="30" class="border border-gray-400 rounded px-2 py-1 w-full max-w-xs" />
+      </div>
+    </li>
+    <div class="flex items-center border border-blue-400 rounded px-2 py-1 w-fit">
+      <input type="checkbox" [(ngModel)]="reorg" name="reorg" id="reorgMode" class="mr-2" />
+      <label for="reorgMode">{{ translate.t('firstButton') }}</label>
+    </div>
+    <li class="mb-4">
+      {{ translate.t('SecondLine') }}
+      <div class="mt-2">
+        <button type="submit" class="border border-gray-400 rounded px-4 py-1 bg-gray-100 text-center w-auto">
+          {{ translate.t('secondeButton') }}
+        </button>
+      </div>
+    </li>
+  </ul>
+</form>
+
+<footer class="max-w-xl flex items-center justify-start border-t pt-4 text-sm text-gray-600 mt-8 ml-0">
+  <img src="assets/gwlogo.png" alt="GeneWeb"
+    class="h-8 w-28 p-0.5 bg-gray-100 border border-gray-400 rounded shadow cursor-pointer hover:bg-gray-200"
+    (click)="goToLink($event, 'https://github.com/geneweb/geneweb/')" />
+  <span class="ml-2 font-bold">{{ translate.t('footer') }}</span>
+</footer>

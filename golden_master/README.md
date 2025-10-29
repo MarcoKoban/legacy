@@ -1,5 +1,23 @@
 # 🧪 Golden Master Testing Suite
 
+## ⚡ Quick Start
+
+```bash
+# Depuis WSL, lancer tous les tests
+cd /mnt/c/Users/mrori/Bureau/Epitech/legacy/G-ING-900-PAR-9-1-legacy-22/golden_master
+make
+
+# Nettoyer les fichiers générés
+make clean
+
+# Aide complète
+make help
+```
+
+**Résultat** : ✅ 138/138 tests passent (100% de succès)
+
+---
+
 ## 🎯 Objectif
 
 Ce système de **Golden Master Testing** valide que l'implémentation Python de Geneweb produit les **mêmes résultats** que l'implémentation OCaml originale.
@@ -66,6 +84,8 @@ make status       # Affiche le statut des tests
 make compile      # Compile le test runner OCaml
 ```
 
+📖 **Documentation complète** : Voir [MAKEFILE_GUIDE.md](MAKEFILE_GUIDE.md) pour tous les détails
+
 ### Option 2 : Script bash direct
 
 ```bash
@@ -113,20 +133,26 @@ Différences: 0
 
 ```
 golden_master/
+├── Makefile                             # ⭐ Makefile pour automatiser les tests
 ├── inputs/                              # Fichiers de test JSON
 │   ├── sosa_basic_tests.json           # Tests basiques Sosa (26 ops)
 │   ├── sosa_tests.json                 # Tests complets Sosa (43 ops)
-│   ├── place_tests.json                # Tests Place (non impl.)
-│   └── calendar_tests.json             # Tests Calendar (non impl.)
+│   ├── place_tests.json                # Tests Place (23 ops)
+│   ├── calendar_tests.json             # Tests Calendar (23 ops)
+│   ├── person_tests.json               # Tests Person (14 ops)
+│   └── family_tests.json               # Tests Family (9 ops)
 │
-├── outputs_ocaml/                       # Résultats OCaml
-├── outputs_python/                      # Résultats Python
+├── outputs_ocaml/                       # Résultats OCaml (générés)
+├── outputs_python/                      # Résultats Python (générés)
+├── reports/                             # Rapports de comparaison
 │
-├── run_complete_golden_master.sh        # ⭐ Script principal
+├── run_complete_golden_master.sh        # Script principal bash
 ├── run_ocaml_tests_fixed.ml            # Test runner OCaml
 ├── run_python_tests_simple.py          # Test runner Python
-├── compare_ocaml_python.py             # Comparateur
-└── validate_golden_master.py           # Validateur OCaml
+├── compare_ocaml_python.py             # Comparateur OCaml/Python
+├── validate_golden_master.py           # Validateur OCaml
+├── README.md                            # 📖 Ce fichier
+└── STRUCTURE.md                         # Documentation de structure
 ```
 
 ---
